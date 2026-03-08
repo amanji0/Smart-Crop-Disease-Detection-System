@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Crop Assistant — User Flow</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --dark:   #0D3B2E;
+    --mid:    #1A6B4A;
+    --lime:   #2ECC71;
+    --teal:   #0E7C6B;
+    --amber:  #F0A500;
+    --white:  #FFFFFF;
+    --sand:   #F5F9F7;
+    --gray:   #6B7B74;
+    --light:  #D4E6DE;
+    --pale:   #E8F8F0;
+  }
+
+  body {
+    background: var(--sand);
+    font-family: 'DM Sans', sans-serif;
+    padding: 40px 20px 60px;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .header-tag {
+    display: inline-block;
+    background: var(--lime);
+    color: var(--dark);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 4vw, 38px);
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .header p {
+    color: var(--gray);
+    font-size: 14px;
+  }
+
+  /* ── FLOW CONTAINER ── */
+  .flow {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  /* ── START NODE ── */
+  .start-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+  }
+  .start-node {
+    background: var(--dark);
+    color: var(--lime);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 12px 36px;
+    border-radius: 40px;
+    text-transform: uppercase;
+  }
+
+  /* ── ARROW ── */
+  .arrow-down {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0;
+  }
+  .arrow-down svg { display: block; }
+
+  /* ── STEP NODE ── */
+  .step-wrap {
+    display: flex;
+    justify-content: center;
+  }
+  .step {
+    background: var(--dark);
+    border-radius: 14px;
+    padding: 16px 28px;
+    min-width: 220px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(13,59,46,0.18);
+  }
+  .step-num {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--lime);
+    color: var(--dark);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 10px;
+  }
+  .step-icon { font-size: 22px; margin-bottom: 6px; margin-top: 4px; }
+  .step-title {
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .step-desc {
+    color: var(--light);
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  /* ── SPLIT ── */
+  .split-section {
+    position: relative;
+    margin: 0;
+  }
+
+  /* horizontal line */
+  .split-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    padding: 0 60px;
+    position: relative;
+  }
+  .split-line::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 2px;
+    background: var(--light);
+  }
+
+  /* ── SPLIT LABEL ── */
+  .split-label {
+    background: var(--lime);
+    color: var(--dark);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    white-space: nowrap;
+    z-index: 2;
+  }
+
+  /* ── TWO COLUMNS ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: 0 24px;
+  }
+
+  /* ── TRACK ── */
+  .track {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .track-header {
+    border-radius: 12px 12px 0 0;
+    padding: 14px 20px 12px;
+    text-align: center;
+    width: 100%;
+  }
+  .track-header.crop  { background: var(--mid); }
+  .track-header.disease { background: var(--teal); }
+
+  .track-header-icon { font-size: 24px; margin-bottom: 4px; }
+  .track-header-title {
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .track-header-sub {
+    color: var(--light);
+    font-size: 10px;
+    margin-top: 2px;
+  }
+
+  /* track steps */
+  .track-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
+  }
+
+  .t-step {
+    width: 100%;
+    background: var(--white);
+    border-left: 3px solid var(--lime);
+    border-right: 1px solid var(--light);
+    padding: 10px 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .t-step.disease-track { border-left-color: var(--amber); }
+  .t-step:last-child {
+    border-radius: 0 0 12px 12px;
+    border-bottom: 1px solid var(--light);
+  }
+
+  .t-step-num {
+    background: var(--lime);
+    color: var(--dark);
+    font-size: 9px;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .t-step-num.d { background: var(--amber); }
+
+  .t-step-text { flex: 1; }
+  .t-step-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 2px;
+  }
+  .t-step-desc {
+    font-size: 10.5px;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  /* track arrow */
+  .t-arrow {
+    display: flex;
+    justify-content: center;
+    padding: 2px 0;
+  }
+
+  /* ── RESULT CARDS ── */
+  .result-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: 0 24px;
+    margin-top: 0;
+  }
+
+  .result-card {
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .result-card.crop-result    { background: var(--mid); }
+  .result-card.disease-result { background: var(--teal); }
+
+  .result-icon { font-size: 26px; margin-bottom: 8px; }
+  .result-title {
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .result-items {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+  }
+  .result-item {
+    background: rgba(255,255,255,0.12);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 11px;
+    color: var(--light);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .result-item span { color: var(--lime); font-size: 13px; }
+  .result-item.da span { color: var(--amber); }
+
+  /* ── ERROR STATES ── */
+  .error-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: 0 24px;
+    margin-top: 8px;
+  }
+  .error-box {
+    background: #FEF3CD;
+    border: 1px dashed #F0A500;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 11px;
+    color: #7B5800;
+    text-align: center;
+  }
+  .error-box strong { display: block; margin-bottom: 3px; color: #5D4200; }
+
+  /* ── END NODE ── */
+  .end-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+  }
+  .end-node {
+    background: var(--lime);
+    color: var(--dark);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 14px 40px;
+    border-radius: 40px;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(46,204,113,0.3);
+  }
+  .end-node p {
+    font-size: 10px;
+    font-weight: 400;
+    margin-top: 3px;
+    opacity: 0.8;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    max-width: 980px;
+    margin: 32px auto 0;
+    background: var(--white);
+    border-radius: 12px;
+    padding: 16px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    border: 1px solid var(--light);
+  }
+  .legend-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 8px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--gray);
+  }
+  .legend-dot {
+    width: 12px; height: 12px;
+    border-radius: 3px;
+  }
+
+  /* small arrow svg helper */
+  .arr { color: var(--light); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-tag">UX-02 — User Flow Diagram</div>
+  <h1>Smart Crop Assistant</h1>
+  <p>Complete user journey — from opening the app to receiving AI-powered guidance</p>
+</div>
+
+<div class="flow">
+
+  <!-- START -->
+  <div class="start-wrap">
+    <div class="start-node">🚀 User Opens App</div>
+  </div>
+
+  <div class="arrow-down">
+    <svg width="2" height="28" viewBox="0 0 2 28"><line x1="1" y1="0" x2="1" y2="20" stroke="#D4E6DE" stroke-width="2"/><polygon points="1,28 -4,18 6,18" fill="#D4E6DE"/></svg>
+  </div>
+
+  <!-- STEP 1 — Home Page -->
+  <div class="step-wrap">
+    <div class="step">
+      <div class="step-num">STEP 1</div>
+      <div class="step-icon">🏠</div>
+      <div class="step-title">Home Page Loads</div>
+      <div class="step-desc">User sees the two main options<br>Arabic or English interface</div>
+    </div>
+  </div>
+
+  <div class="arrow-down">
+    <svg width="2" height="28" viewBox="0 0 2 28"><line x1="1" y1="0" x2="1" y2="20" stroke="#D4E6DE" stroke-width="2"/><polygon points="1,28 -4,18 6,18" fill="#D4E6DE"/></svg>
+  </div>
+
+  <!-- DECISION — Choose Module -->
+  <div class="step-wrap">
+    <div class="step" style="background:#1A3A2E; border: 2px solid var(--lime);">
+      <div class="step-num" style="background:var(--lime)">CHOOSE</div>
+      <div class="step-icon">🤔</div>
+      <div class="step-title" style="color:var(--lime)">Select a Module</div>
+      <div class="step-desc">Which feature do you need?</div>
+    </div>
+  </div>
+
+  <!-- SPLIT LINE -->
+  <div style="position:relative; height:48px; display:flex; align-items:center; justify-content:center; padding: 0 24px;">
+    <div style="position:absolute; top:50%; left:24px; right:24px; height:2px; background:var(--light);"></div>
+    <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); display:flex; gap: calc(50% - 60px);">
+    </div>
+    <!-- left arrow -->
+    <div style="position:absolute; left:calc(25% + 24px); top:50%; transform:translateX(-50%);">
+      <svg width="2" height="24" viewBox="0 0 2 24"><line x1="1" y1="0" x2="1" y2="16" stroke="#D4E6DE" stroke-width="2"/><polygon points="1,24 -4,14 6,14" fill="#D4E6DE"/></svg>
+    </div>
+    <!-- right arrow -->
+    <div style="position:absolute; left:calc(75% + 24px); top:50%; transform:translateX(-50%);">
+      <svg width="2" height="24" viewBox="0 0 2 24"><line x1="1" y1="0" x2="1" y2="16" stroke="#D4E6DE" stroke-width="2"/><polygon points="1,24 -4,14 6,14" fill="#D4E6DE"/></svg>
+    </div>
+  </div>
+
+  <!-- TWO TRACKS -->
+  <div class="two-col">
+
+    <!-- TRACK A — CROP -->
+    <div class="track">
+      <div class="track-header crop">
+        <div class="track-header-icon">🌾</div>
+        <div class="track-header-title">Crop Recommendation</div>
+        <div class="track-header-sub">Tap the green button</div>
+      </div>
+      <div class="track-body">
+
+        <div class="t-step">
+          <div class="t-step-num">1</div>
+          <div class="t-step-text">
+            <div class="t-step-title">Location Detection</div>
+            <div class="t-step-desc">App auto-detects city via GPS<br>or user types city name manually</div>
+          </div>
+        </div>
+
+        <div class="t-arrow">
+          <svg width="2" height="16" viewBox="0 0 2 16"><line x1="1" y1="0" x2="1" y2="10" stroke="#D4E6DE" stroke-width="2"/><polygon points="1,16 -3,10 5,10" fill="#D4E6DE"/></svg>
+        </div>
+
+        <div class="t-step">
+          <div class="t-step-num">2</div>
+          <div class="t-step-text">
+            <div class="t-step-title">Select Season</div>
+            <div class="t-step-desc">Auto-detected based on current month<br>or user selects manually</div>
+          </div>
+        </div>
+
+        <div class="t-arrow">
+          <svg width="2" height="16" viewBox="0 0 2 16"><line x1="1" y1="0" x2="1" y2="10" stroke="#D4E6DE" stroke-width="2"/><polygon points="1,16 -3,10 5,10" fill="#D4E6DE"/></svg>
+        </div>
+
+        <div class="t-step">
+          <div class="t-step-num">3</div>
+          <div class="t-step-text">
+            <div class="t-step-title">Fetch Live Data</div>
+            <div class="t-step-desc">System calls Open-Meteo (weather)<br>+ SoilGrids FAO (N, P, K, pH)</div>
+          </div>
+        </div>
+
+        <div class="t-arrow">
+          <svg width="2" height="16" viewBox="0 0 2 16"><line x1="1" y1="0" x2="1" y2="10" stroke="#D4E6DE" stroke-width="2"/><polygon points="1,16 -3,10 5,10" fill="#D4E6DE"/></svg>
+        </div>
+
+        <div class="t-step">
+          <div class="t-step-num">4</div>
+          <div class="t-step-text">
+            <div class="t-step-title">AI Processing</div>
+            <div class="t-step-desc">Random Forest model analyzes<br>all 7 inputs in &lt; 1 second</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TRACK B — DISEASE -->
+    <div class="track">
+      <div class="track-header disease">
+        <div class="track-header-icon">🔬</div>
+        <div class="track-header-title">Disease Detection</div>
+        <div class="track-header-sub">Tap the white button</div>
+      </div>
+      <div class="track-body">
+
+        <div class="t-step disease-track">
+          <div class="t-step-num d">1</div>
+          <div class="t-step-text">
+            <div class="t-step-title">Upload Leaf Photo</div>
+            <div class="t-step-desc">Take photo with phone camera<br>or upload from gallery</div>
+          </div>
+        </div>
+
+        <div class="t-arrow">
+          <svg width="2" height="16" viewBox="0 0 2 16"><line x1="1" y1="0" x2="1" y2="10" stroke="#D4E6DE" stroke-width="2"/><polygon points="1,16 -3,10 5,10" fill="#D4E6DE"/></svg>
+        </div>
+
+        <div class="t-step disease-track">
+          <div class="t-step-num d">2</div>
+          <div class="t-step-text">
+            <div class="t-step-title">Select Plant Type</div>
+            <div class="t-step-desc">Choose from: Tomato, Potato,<br>Maize, Wheat, Apple… (optional)</div>
+          </div>
+        </div>
+
+        <div class="t-arrow">
+          <svg width="2" height="16" viewBox="0 0 2 16"><line x1="1" y1="0" x2="1" y2="10" stroke="#D4E6DE" stroke-width="2"/><polygon points="1,16 -3,10 5,10" fill="#D4E6DE"/></svg>
+        </div>
+
+        <div class="t-step disease-track">
+          <div class="t-step-num d">3</div>
+          <div class="t-step-text">
+            <div class="t-step-title">Image Preprocessing</div>
+            <div class="t-step-desc">Image resized to 224×224<br>and normalized automatically</div>
+          </div>
+        </div>
+
+        <div class="t-arrow">
+          <svg width="2" height="16" viewBox="0 0 2 16"><line x1="1" y1="0" x2="1" y2="10" stroke="#D4E6DE" stroke-width="2"/><polygon points="1,16 -3,10 5,10" fill="#D4E6DE"/></svg>
+        </div>
+
+        <div class="t-step disease-track">
+          <div class="t-step-num d">4</div>
+          <div class="t-step-text">
+            <div class="t-step-title">CNN Analysis</div>
+            <div class="t-step-desc">MobileNetV2 classifies disease<br>from 38 classes in ~2 seconds</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ARROWS DOWN TO RESULTS -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; padding:0 24px;">
+    <div class="arrow-down">
+      <svg width="2" height="20" viewBox="0 0 2 20"><line x1="1" y1="0" x2="1" y2="12" stroke="#D4E6DE" stroke-width="2"/><polygon points="1,20 -4,10 6,10" fill="#D4E6DE"/></svg>
+    </div>
+    <div class="arrow-down">
+      <svg width="2" height="20" viewBox="0 0 2 20"><line x1="1" y1="0" x2="1" y2="12" stroke="#D4E6DE" stroke-width="2"/><polygon points="1,20 -4,10 6,10" fill="#D4E6DE"/></svg>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="result-cards">
+
+    <div class="result-card crop-result">
+      <div class="result-icon">🌾</div>
+      <div class="result-title">Crop Result Screen</div>
+      <div class="result-items">
+        <div class="result-item"><span>✓</span> Best crop + confidence %</div>
+        <div class="result-item"><span>✓</span> Weather data summary</div>
+        <div class="result-item"><span>✓</span> Soil N / P / K / pH values</div>
+        <div class="result-item"><span>✓</span> Top 3 alternative crops</div>
+        <div class="result-item"><span>✓</span> Why this crop? (explanation)</div>
+      </div>
+    </div>
+
+    <div class="result-card disease-result">
+      <div class="result-icon">🔬</div>
+      <div class="result-title">Disease Result Screen</div>
+      <div class="result-items">
+        <div class="result-item da"><span>✓</span> Disease name + confidence %</div>
+        <div class="result-item da"><span>✓</span> Cause (pathogen)</div>
+        <div class="result-item da"><span>✓</span> Symptoms description</div>
+        <div class="result-item da"><span>✓</span> Treatment steps</div>
+        <div class="result-item da"><span>✓</span> Prevention advice + severity</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ERROR STATES -->
+  <div class="error-row">
+    <div class="error-box">
+      <strong>⚠️ Error States — Crop</strong>
+      City not found · API timeout · Low confidence (&lt;60%)
+    </div>
+    <div class="error-box">
+      <strong>⚠️ Error States — Disease</strong>
+      Blurry image · Wrong format · Low confidence (&lt;50%)
+    </div>
+  </div>
+
+  <!-- ARROW TO END -->
+  <div class="arrow-down" style="margin-top:16px;">
+    <svg width="2" height="28" viewBox="0 0 2 28"><line x1="1" y1="0" x2="1" y2="20" stroke="#D4E6DE" stroke-width="2"/><polygon points="1,28 -4,18 6,18" fill="#D4E6DE"/></svg>
+  </div>
+
+  <!-- END -->
+  <div class="end-wrap">
+    <div class="end-node">
+      ✅ Farmer Takes Action
+      <p>Guided by real data · Arabic or English · Free on any mobile</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <span class="legend-title">Legend</span>
+  <div class="legend-item"><div class="legend-dot" style="background:#0D3B2E"></div> System Step</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1A6B4A"></div> Crop Track</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#0E7C6B"></div> Disease Track</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#2ECC71"></div> Decision / Result</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#FEF3CD; border:1px solid #F0A500"></div> Error State</div>
+</div>
+
+</body>
+</html>

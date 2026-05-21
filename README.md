@@ -2,7 +2,7 @@
 
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=13&pause=1000&color=22C55E&center=true&vCenter=true&width=600&lines=AI-Powered+Agricultural+Assistant+for+Egyptian+Farmers" alt="Typing SVG" />
 
-# 🌱 Smart Crop Assistant
+# 🌱 Smart Crop Disease Detection System
 
 **مساعد المحاصيل الذكي**
 

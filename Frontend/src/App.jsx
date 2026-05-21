@@ -20,15 +20,64 @@ export default function SmartCropAssistant() {
     }
     
     setLoadingCrop(true);
-    setTimeout(() => {
-      setCropResult({
-        crop: 'القمح',
-        confidence: 99,
-        alternatives: ['الذرة', 'البرسيم'],
-        tips: ['الزراعة في نهاية نوفمبر', 'الري كل 3 أيام', 'الحصاد في مايو']
+    try {
+      // Mocked environmental data for now, but sent to the real AI model
+      const response = await fetch('http://localhost:8000/recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          city: cropCity,
+          N: 90, P: 42, K: 43, 
+          temperature: 20.8, 
+          humidity: 82.0, 
+          ph: 6.5, 
+          rainfall: 202.9
+        })
       });
+      
+      if (!response.ok) throw new Error('Network response was not ok');
+      
+      const data = await response.json();
+      
+      // Map English crop names to Arabic if possible, or just use the data
+      // For now, we'll use the data from the backend
+      const arabicCrops = {
+        'rice': 'الأرز',
+        'maize': 'الذرة',
+        'chickpea': 'الحمص',
+        'kidneybeans': 'الفاصوليا',
+        'pigeonpeas': 'البسلة الهندية',
+        'mothbeans': 'لوبيا الحصى',
+        'mungbean': 'الماش',
+        'blackgram': 'العدس الأسود',
+        'lentil': 'العدس',
+        'pomegranate': 'الرمان',
+        'banana': 'الموز',
+        'mango': 'المانجو',
+        'grapes': 'العنب',
+        'watermelon': 'البطيخ',
+        'muskmelon': 'الكنتالوب',
+        'apple': 'التفاح',
+        'orange': 'البرتقال',
+        'papaya': 'البابايا',
+        'coconut': 'جوز الهند',
+        'cotton': 'القطن',
+        'jute': 'الجوت',
+        'coffee': 'القهوة'
+      };
+
+      setCropResult({
+        crop: arabicCrops[data.recommended_crop] || data.recommended_crop,
+        confidence: data.confidence,
+        alternatives: data.alternatives.map(alt => arabicCrops[alt] || alt),
+        tips: data.tips
+      });
+    } catch (error) {
+      console.error('Error fetching recommendation:', error);
+      alert('حدث خطأ في الاتصال بالسيرفر!');
+    } finally {
       setLoadingCrop(false);
-    }, 1500);
+    }
   };
 
   const handleDiseaseAnalysis = async () => {
@@ -38,15 +87,36 @@ export default function SmartCropAssistant() {
     }
     
     setLoadingDisease(true);
-    setTimeout(() => {
-      setDiseaseResult({
-        disease: 'صدأ الورقة',
-        confidence: 95,
-        treatment: 'استخدم مبيد فطري ثلاثي الأركان',
-        prevention: 'تحسين التهوية، تقليل الرطوبة'
+    try {
+      // Convert data URL back to a Blob for upload
+      const fetchResponse = await fetch(diseaseImage);
+      const blob = await fetchResponse.blob();
+      
+      const formData = new FormData();
+      formData.append('image', blob, 'leaf.jpg');
+      formData.append('plant_type', diseasePlant);
+      
+      const response = await fetch('http://localhost:8000/disease-predict', {
+        method: 'POST',
+        body: formData,
       });
+      
+      if (!response.ok) throw new Error('Disease analysis failed');
+      
+      const data = await response.json();
+      
+      setDiseaseResult({
+        disease: data.disease,
+        confidence: data.confidence,
+        treatment: data.treatment,
+        prevention: data.prevention
+      });
+    } catch (error) {
+      console.error('Error analyzing disease:', error);
+      alert('حدث خطأ أثناء تحليل الصورة!');
+    } finally {
       setLoadingDisease(false);
-    }, 1500);
+    }
   };
 
   const handleImageUpload = (e) => {
@@ -74,7 +144,7 @@ export default function SmartCropAssistant() {
             <a href="#" className="hover:text-emerald-600">الرئيسية</a>
           </div>
           <div className="flex items-center gap-2">
-            <span className="font-bold text-emerald-900">محصولاتي</span>
+            <span className="font-bold text-emerald-900">Smart Crop Disease Detection System</span>
             <span className="text-3xl">🌾</span>
           </div>
         </div>
@@ -88,7 +158,7 @@ export default function SmartCropAssistant() {
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold text-emerald-900 mb-6 leading-tight">
-              مساعد الزراعة الذكي
+              Smart Crop Disease Detection System
             </h1>
             
             <p className="text-lg text-emerald-700 mb-8 leading-relaxed">
@@ -389,7 +459,7 @@ export default function SmartCropAssistant() {
 
       <footer className="bg-emerald-950 text-white py-12 mt-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="text-emerald-100">© 2025 محصولاتي | Smart Crop Assistant</p>
+          <p className="text-emerald-100">© 2025 | Smart Crop Disease Detection System</p>
         </div>
       </footer>
     </div>

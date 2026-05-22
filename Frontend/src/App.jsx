@@ -364,11 +364,28 @@ export default function SmartCropApp() {
     } catch {
       // Fallback with realistic disease data
       const diseases = {
-        Tomato: { disease: 'Septoria Leaf Spot', treatment: 'Apply copper-based fungicide every 7-10 days. Remove and destroy affected leaves immediately.', prevention: 'Avoid overhead watering. Rotate crops annually. Use disease-resistant varieties.' },
-        Potato: { disease: 'Late Blight (Phytophthora infestans)', treatment: 'Apply mancozeb or chlorothalonil fungicide. Remove infected plant material promptly.', prevention: 'Plant certified disease-free seed potatoes. Improve drainage and air circulation.' },
-        Corn: { disease: 'Common Rust (Puccinia sorghi)', treatment: 'Apply triazole fungicide at early infection stage. Monitor field regularly.', prevention: 'Plant resistant hybrids. Scout fields weekly during growing season.' },
-        Wheat: { disease: 'Stem Rust (Puccinia graminis)', treatment: 'Apply propiconazole or tebuconazole fungicide. Treat at first sign of pustules.', prevention: 'Use rust-resistant varieties. Early planting to avoid peak infection period.' },
-        Rice: { disease: 'Rice Blast (Magnaporthe oryzae)', treatment: 'Apply tricyclazole or isoprothiolane fungicide at panicle emergence.', prevention: 'Use certified blast-resistant varieties. Avoid excess nitrogen fertilization.' },
+        Tomato: { disease: 'Septoria Leaf Spot', treatment: 'Apply copper-based fungicide every 7-10 days.', prevention: 'Avoid overhead watering. Rotate crops annually.' },
+        Potato: { disease: 'Late Blight', treatment: 'Apply mancozeb or chlorothalonil fungicide.', prevention: 'Plant certified disease-free seed potatoes.' },
+        Corn: { disease: 'Common Rust', treatment: 'Apply triazole-based fungicide at early infection stage.', prevention: 'Plant resistant hybrid varieties.' },
+        Wheat: { disease: 'Stem Rust', treatment: 'Apply propiconazole or tebuconazole at first sign.', prevention: 'Use rust-resistant varieties.' },
+        Rice: { disease: 'Rice Blast', treatment: 'Apply tricyclazole or isoprothiolane fungicide.', prevention: 'Use certified blast-resistant varieties.' },
+        Cotton: { disease: 'Cotton Leaf Curl Virus', treatment: 'Control whitefly vectors.', prevention: 'Eradicate alternate host weeds.' },
+        Sugarcane: { disease: 'Red Rot', treatment: 'Remove and destroy infected canes.', prevention: 'Select disease-resistant varieties.' },
+        Onion: { disease: 'Purple Blotch', treatment: 'Spray mancozeb or chlorothalonil.', prevention: 'Maintain wider plant spacing.' },
+        Carrot: { disease: 'Alternaria Leaf Blight', treatment: 'Apply fungicides like azoxystrobin.', prevention: 'Use certified seed. Practice crop rotation.' },
+        Lentil: { disease: 'Ascochyta Blight', treatment: 'Foliar application of chlorothalonil.', prevention: 'Use clean, treated seed.' },
+        Mustard: { disease: 'Alternaria Blight', treatment: 'Spray iprodione or mancozeb.', prevention: 'Seed treatment with thiram.' },
+        Peas: { disease: 'Powdery Mildew', treatment: 'Apply sulfur-based fungicides.', prevention: 'Use resistant varieties.' },
+        Spinach: { disease: 'Downy Mildew', treatment: 'Apply copper fungicides.', prevention: 'Ensure good air circulation.' },
+        Mango: { disease: 'Anthracnose', treatment: 'Spray copper fungicides during flowering.', prevention: 'Field sanitation. Proper pruning.' },
+        Okra: { disease: 'Yellow Vein Mosaic Virus', treatment: 'Control whitefly vectors.', prevention: 'Use resistant varieties.' },
+        Watermelon: { disease: 'Fusarium Wilt', treatment: 'Remove infected plants.', prevention: 'Long-term crop rotation.' },
+        Barley: { disease: 'Net Blotch', treatment: 'Apply propiconazole or azoxystrobin.', prevention: 'Use treated, disease-free seed.' },
+        Chickpea: { disease: 'Fusarium Wilt', treatment: 'Seed treatment with carbendazim.', prevention: 'Deep ploughing in summer.' },
+        Sorghum: { disease: 'Grain Mold', treatment: 'Spray propiconazole at flowering.', prevention: 'Grow loosely packed panicle varieties.' },
+        Millet: { disease: 'Downy Mildew', treatment: 'Rogue out infected plants.', prevention: 'Use disease-free seeds.' },
+        Apple: { disease: 'Apple Scab', treatment: 'Apply captan or myclobutanil.', prevention: 'Plant resistant cultivars.' },
+        Grapes: { disease: 'Powdery Mildew', treatment: 'Apply sulfur or myclobutanil.', prevention: 'Canopy management.' }
       };
       const info = diseases[diseasePlant] || diseases.Rice;
       setDiseaseResult({ ...info, confidence: 92.5 });
@@ -989,7 +1006,7 @@ export default function SmartCropApp() {
                   onChange={(e) => setDiseasePlant(e.target.value)}
                   className="form-input"
                 >
-                  {['Tomato', 'Potato', 'Corn', 'Wheat', 'Rice'].map((p) => (
+                  {['Tomato', 'Potato', 'Corn', 'Wheat', 'Rice', 'Cotton', 'Sugarcane', 'Onion', 'Carrot', 'Lentil', 'Mustard', 'Peas', 'Spinach', 'Mango', 'Okra', 'Watermelon', 'Barley', 'Chickpea', 'Sorghum', 'Millet', 'Apple', 'Grapes'].map((p) => (
                     <option key={p} value={p}>{p}</option>
                   ))}
                 </select>

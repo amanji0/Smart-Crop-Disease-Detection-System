@@ -211,36 +211,28 @@ async def disease_predict(image: UploadFile = File(...), plant_type: str = Form(
 
     # Disease database
     diseases = {
-        "Tomato": {
-            "disease": "Septoria Leaf Spot",
-            "confidence": 92.5,
-            "treatment": "Apply copper-based fungicide every 7-10 days. Remove and destroy affected leaves immediately to prevent spread.",
-            "prevention": "Avoid overhead watering. Rotate crops annually. Use disease-resistant varieties.",
-        },
-        "Potato": {
-            "disease": "Late Blight (Phytophthora infestans)",
-            "confidence": 89.3,
-            "treatment": "Apply mancozeb or chlorothalonil fungicide immediately. Remove and destroy all infected plant material.",
-            "prevention": "Plant certified disease-free seed potatoes. Improve field drainage and air circulation.",
-        },
-        "Corn": {
-            "disease": "Common Rust (Puccinia sorghi)",
-            "confidence": 91.0,
-            "treatment": "Apply triazole-based fungicide at early infection stage. Monitor fields twice weekly.",
-            "prevention": "Plant resistant hybrid varieties. Scout fields weekly throughout the growing season.",
-        },
-        "Wheat": {
-            "disease": "Stem Rust (Puccinia graminis)",
-            "confidence": 88.7,
-            "treatment": "Apply propiconazole or tebuconazole at first sign of pustules. Treat entire field within 48 hours.",
-            "prevention": "Use rust-resistant varieties. Early planting avoids peak infection periods.",
-        },
-        "Rice": {
-            "disease": "Rice Blast (Magnaporthe oryzae)",
-            "confidence": 93.1,
-            "treatment": "Apply tricyclazole or isoprothiolane fungicide at panicle emergence. Repeat after 10 days if needed.",
-            "prevention": "Use certified blast-resistant varieties. Avoid excessive nitrogen fertilization.",
-        },
+        'Tomato': {'disease': 'Septoria Leaf Spot', 'confidence': 92.5, 'treatment': 'Apply copper-based fungicide every 7-10 days.', 'prevention': 'Avoid overhead watering. Rotate crops annually.'},
+        'Potato': {'disease': 'Late Blight', 'confidence': 89.3, 'treatment': 'Apply mancozeb or chlorothalonil fungicide.', 'prevention': 'Plant certified disease-free seed potatoes.'},
+        'Corn': {'disease': 'Common Rust', 'confidence': 91.0, 'treatment': 'Apply triazole-based fungicide at early infection stage.', 'prevention': 'Plant resistant hybrid varieties.'},
+        'Wheat': {'disease': 'Stem Rust', 'confidence': 88.7, 'treatment': 'Apply propiconazole or tebuconazole at first sign.', 'prevention': 'Use rust-resistant varieties.'},
+        'Rice': {'disease': 'Rice Blast', 'confidence': 93.1, 'treatment': 'Apply tricyclazole or isoprothiolane fungicide.', 'prevention': 'Use certified blast-resistant varieties.'},
+        'Cotton': {'disease': 'Cotton Leaf Curl Virus', 'confidence': 88.5, 'treatment': 'Control whitefly vectors using recommended insecticides.', 'prevention': 'Eradicate alternate host weeds. Crop rotation.'},
+        'Sugarcane': {'disease': 'Red Rot', 'confidence': 90.1, 'treatment': 'Remove and destroy infected canes.', 'prevention': 'Select disease-resistant varieties.'},
+        'Onion': {'disease': 'Purple Blotch', 'confidence': 87.2, 'treatment': 'Spray mancozeb or chlorothalonil.', 'prevention': 'Maintain wider plant spacing. Proper curing.'},
+        'Carrot': {'disease': 'Alternaria Leaf Blight', 'confidence': 85.8, 'treatment': 'Apply fungicides like azoxystrobin.', 'prevention': 'Use certified seed. Practice 3-year crop rotation.'},
+        'Lentil': {'disease': 'Ascochyta Blight', 'confidence': 89.9, 'treatment': 'Foliar application of chlorothalonil.', 'prevention': 'Use clean, treated seed. Plant resistant varieties.'},
+        'Mustard': {'disease': 'Alternaria Blight', 'confidence': 86.4, 'treatment': 'Spray iprodione or mancozeb. Timely sowing helps.', 'prevention': 'Seed treatment with thiram. Deep summer ploughing.'},
+        'Peas': {'disease': 'Powdery Mildew', 'confidence': 93.0, 'treatment': 'Apply sulfur-based fungicides.', 'prevention': 'Use resistant varieties. Avoid late sowing.'},
+        'Spinach': {'disease': 'Downy Mildew', 'confidence': 91.5, 'treatment': 'Apply copper fungicides.', 'prevention': 'Ensure good air circulation. Avoid overhead irrigation.'},
+        'Mango': {'disease': 'Anthracnose', 'confidence': 88.7, 'treatment': 'Spray copper fungicides during flowering.', 'prevention': 'Field sanitation. Proper pruning for canopy aeration.'},
+        'Okra': {'disease': 'Yellow Vein Mosaic Virus', 'confidence': 94.2, 'treatment': 'Control whitefly vectors with systemic insecticides.', 'prevention': 'Use resistant varieties. Eradicate weed hosts.'},
+        'Watermelon': {'disease': 'Fusarium Wilt', 'confidence': 87.9, 'treatment': 'Remove infected plants. Fungicide application via drip irrigation.', 'prevention': 'Long-term crop rotation. Soil solarization.'},
+        'Barley': {'disease': 'Net Blotch', 'confidence': 86.1, 'treatment': 'Apply propiconazole or azoxystrobin.', 'prevention': 'Use treated, disease-free seed. Crop rotation.'},
+        'Chickpea': {'disease': 'Fusarium Wilt', 'confidence': 89.5, 'treatment': 'Seed treatment with carbendazim. Uproot diseased plants.', 'prevention': 'Deep ploughing in summer. Plant resistant varieties.'},
+        'Sorghum': {'disease': 'Grain Mold', 'confidence': 85.0, 'treatment': 'Spray propiconazole at flowering.', 'prevention': 'Grow loosely packed panicle varieties. Adjust planting date.'},
+        'Millet': {'disease': 'Downy Mildew', 'confidence': 92.1, 'treatment': 'Rogue out infected plants. Spray metalaxyl.', 'prevention': 'Use disease-free seeds. Seed treatment with metalaxyl.'},
+        'Apple': {'disease': 'Apple Scab', 'confidence': 91.8, 'treatment': 'Apply captan or myclobutanil.', 'prevention': 'Plant resistant cultivars. Apply urea to fallen leaves.'},
+        'Grapes': {'disease': 'Powdery Mildew', 'confidence': 90.5, 'treatment': 'Apply sulfur or myclobutanil. Prune for better air flow.', 'prevention': 'Canopy management. Preventive sulfur sprays.'}
     }
 
     result = diseases.get(plant_type, diseases["Rice"])

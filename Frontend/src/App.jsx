@@ -461,7 +461,7 @@ export default function SmartCropApp() {
 
   // ─── RENDER ───
   return (
-    <div style={{ background: '#030d07', minHeight: '100vh' }}>
+    <div style={{ background: 'var(--bg-page)', minHeight: '100vh' }}>
 
       {/* ═══ NAVBAR ═══ */}
       <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
@@ -469,15 +469,14 @@ export default function SmartCropApp() {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px' }}>
             {/* Logo */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{
-                width: '40px', height: '40px', borderRadius: '12px',
-                background: 'linear-gradient(135deg, #059669, #047857)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '1.25rem', boxShadow: '0 4px 16px rgba(5,150,105,0.4)',
-              }}>🌿</div>
+              <img
+                src="/farmer-logo.png"
+                alt="SmartCrop"
+                style={{ width: '42px', height: '42px', borderRadius: '12px', objectFit: 'cover' }}
+              />
               <div>
-                <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.1rem', color: '#ecfdf5', lineHeight: 1.2 }}>SmartCrop</div>
-                <div style={{ fontSize: '0.65rem', color: '#34d399', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>{t.brandSub}</div>
+                <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-primary)', lineHeight: 1.2 }}>SmartCrop</div>
+                <div style={{ fontSize: '0.65rem', color: 'var(--color-primary)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>{t.brandSub}</div>
               </div>
             </div>
 
@@ -498,8 +497,8 @@ export default function SmartCropApp() {
               {/* ── Language Toggle: EN / HI only ── */}
               <div style={{
                 display: 'flex', alignItems: 'center',
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.1)',
+                background: 'var(--border-light)',
+                border: '1px solid var(--border-light)',
                 borderRadius: '10px',
                 padding: '3px',
                 gap: '2px',
@@ -520,8 +519,8 @@ export default function SmartCropApp() {
                       background: lang === code
                         ? 'linear-gradient(135deg, #059669, #047857)'
                         : 'transparent',
-                      color: lang === code ? '#ffffff' : 'rgba(167, 243, 208, 0.5)',
-                      boxShadow: lang === code ? '0 2px 8px rgba(5,150,105,0.4)' : 'none',
+                      color: lang === code ? '#ffffff' : 'var(--text-muted)',
+                      boxShadow: lang === code ? '0 2px 8px rgba(5,150,105,0.3)' : 'none',
                     }}
                   >
                     {code === 'en' ? 'EN' : 'HI'}
@@ -566,14 +565,14 @@ export default function SmartCropApp() {
                 lineHeight: 1.08,
                 letterSpacing: '-0.02em',
                 marginBottom: '1.5rem',
-                color: '#ecfdf5',
+                color: 'var(--text-primary)',
               }}>
                 {t.heroTitle1}<br />
                 <span className="gradient-text">{t.heroTitle2}</span><br />
                 {t.heroTitle3}
               </h1>
 
-              <p style={{ fontSize: '1.125rem', color: 'rgba(167, 243, 208, 0.65)', lineHeight: 1.75, marginBottom: '2.5rem', maxWidth: '500px' }}>
+              <p style={{ fontSize: '1.125rem', color: 'var(--text-muted)', lineHeight: 1.75, marginBottom: '2.5rem', maxWidth: '500px' }}>
                 {t.heroDesc}
               </p>
 
@@ -597,15 +596,15 @@ export default function SmartCropApp() {
               </div>
 
               {/* Trust indicators */}
-              <div style={{ display: 'flex', gap: '2rem', marginTop: '2.5rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+              <div style={{ display: 'flex', gap: '2rem', marginTop: '2.5rem', paddingTop: '2rem', borderTop: '1px solid var(--border-light)' }}>
                 {[
                   { val: '99%', label: t.heroAccuracy },
                   { val: '22+', label: t.heroCrops },
                   { val: t.heroWeather, label: t.heroWeather },
                 ].map((s, i) => (
                   <div key={i}>
-                    <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.5rem', color: '#34d399' }}>{s.val}</div>
-                    <div style={{ fontSize: '0.75rem', color: 'rgba(167, 243, 208, 0.5)', fontWeight: 500 }}>{s.label}</div>
+                    <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.5rem', color: 'var(--color-primary)' }}>{s.val}</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 500 }}>{s.label}</div>
                   </div>
                 ))}
               </div>
@@ -623,7 +622,7 @@ export default function SmartCropApp() {
               <div className="glass" style={{
                 borderRadius: '28px',
                 padding: '2.5rem',
-                border: '1px solid rgba(16, 185, 129, 0.12)',
+                border: '1px solid var(--border-light)',
                 position: 'relative',
                 overflow: 'hidden',
               }}>
@@ -646,19 +645,19 @@ export default function SmartCropApp() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
                   {[
-                    { val: '99%', label: t.heroAccuracy, color: '#34d399' },
-                    { val: '22+', label: t.heroCrops, color: '#6ee7b7' },
-                    { val: t.heroWeather, label: t.heroWeather, color: '#a7f3d0' },
+                    { val: '99%', label: t.heroAccuracy, color: 'var(--color-primary)' },
+                    { val: '22+', label: t.heroCrops, color: 'var(--color-primary-light)' },
+                    { val: t.heroWeather, label: t.heroWeather, color: 'var(--color-primary)' },
                   ].map((s, i) => (
                     <div key={s.label} style={{
-                      background: 'rgba(16, 185, 129, 0.06)',
-                      border: '1px solid rgba(16, 185, 129, 0.12)',
+                      background: 'var(--bg-card)',
+                      border: '1px solid var(--border-light)',
                       borderRadius: '14px',
                       padding: '1rem',
                       textAlign: 'center',
                     }}>
                       <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.5rem', color: s.color }}>{s.val}</div>
-                      <div style={{ fontSize: '0.7rem', color: 'rgba(167, 243, 208, 0.5)', marginTop: '2px', fontWeight: 500 }}>{s.label}</div>
+                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '2px', fontWeight: 500 }}>{s.label}</div>
                     </div>
                   ))}
                 </div>
@@ -666,8 +665,8 @@ export default function SmartCropApp() {
                 {/* Status bar */}
                 <div style={{
                   marginTop: '1.25rem',
-                  background: 'rgba(16, 185, 129, 0.06)',
-                  border: '1px solid rgba(16, 185, 129, 0.12)',
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--border-light)',
                   borderRadius: '12px',
                   padding: '0.875rem 1rem',
                   display: 'flex',
@@ -675,7 +674,7 @@ export default function SmartCropApp() {
                   gap: '10px',
                 }}>
                   <div className="pulse-dot" />
-                  <span style={{ fontSize: '0.8rem', color: '#6ee7b7', fontWeight: 500 }}>{t.heroStatus}</span>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--color-primary-light)', fontWeight: 500 }}>{t.heroStatus}</span>
                 </div>
               </div>
             </div>
@@ -684,11 +683,11 @@ export default function SmartCropApp() {
       </section>
 
       {/* ═══ STATS BAR ═══ */}
-      <section id="stats" style={{ background: '#020b06', padding: '5rem 1.5rem' }}>
+      <section id="stats" style={{ background: 'var(--bg-section-alt)', padding: '5rem 1.5rem' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <div className="section-label" style={{ justifyContent: 'center' }}>{t.statsLabel}</div>
-            <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', fontWeight: 800, color: '#ecfdf5' }}>
+            <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', fontWeight: 800, color: 'var(--text-primary)' }}>
               {t.statsHeadline} <span className="gradient-text">{t.statsWorldwide}</span>
             </h2>
           </div>
@@ -700,9 +699,9 @@ export default function SmartCropApp() {
                 style={{ padding: '2rem', textAlign: 'center', opacity: 0 }}
               >
                 <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>{s.icon}</div>
-                <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: '2.5rem', color: '#34d399', lineHeight: 1 }}>{s.val}</div>
-                <div style={{ fontWeight: 700, color: '#ecfdf5', marginTop: '0.5rem', fontSize: '0.95rem' }}>{s.label}</div>
-                <div style={{ fontSize: '0.75rem', color: 'rgba(167, 243, 208, 0.4)', marginTop: '0.25rem' }}>{s.sub}</div>
+                <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: '2.5rem', color: 'var(--color-primary)', lineHeight: 1 }}>{s.val}</div>
+                <div style={{ fontWeight: 700, color: 'var(--text-primary)', marginTop: '0.5rem', fontSize: '0.95rem' }}>{s.label}</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>{s.sub}</div>
               </div>
             ))}
           </div>
@@ -710,14 +709,14 @@ export default function SmartCropApp() {
       </section>
 
       {/* ═══ FEATURES GRID ═══ */}
-      <section id="features" style={{ padding: '6rem 1.5rem', background: '#030d07' }}>
+      <section id="features" style={{ padding: '6rem 1.5rem', background: 'var(--bg-page)' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <div className="section-label" style={{ justifyContent: 'center' }}>{t.featLabel}</div>
-            <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: 'clamp(2rem, 3.5vw, 3rem)', fontWeight: 900, color: '#ecfdf5', letterSpacing: '-0.02em', marginBottom: '1rem' }}>
+            <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: 'clamp(2rem, 3.5vw, 3rem)', fontWeight: 900, color: 'var(--text-primary)', letterSpacing: '-0.02em', marginBottom: '1rem' }}>
               {t.featHeadline} <span className="gradient-text">{t.featHeadline2}</span>
             </h2>
-            <p style={{ color: 'rgba(167, 243, 208, 0.5)', fontSize: '1.1rem', maxWidth: '520px', margin: '0 auto' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '520px', margin: '0 auto' }}>
               {t.featDesc}
             </p>
           </div>
@@ -736,13 +735,13 @@ export default function SmartCropApp() {
                 >
                   {f.icon}
                 </div>
-                <h3 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.2rem', color: '#ecfdf5', marginBottom: '0.625rem' }}>
+                <h3 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: '0.625rem' }}>
                   {f.title}
                 </h3>
-                <p style={{ color: 'rgba(167, 243, 208, 0.45)', fontSize: '0.875rem', lineHeight: 1.65, marginBottom: '1.25rem' }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', lineHeight: 1.65, marginBottom: '1.25rem' }}>
                   {f.desc}
                 </p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#34d399', fontSize: '0.85rem', fontWeight: 600 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-primary)', fontSize: '0.85rem', fontWeight: 600 }}>
                   {t.openTool} <ChevronRight size={14} />
                 </div>
               </button>
@@ -752,14 +751,14 @@ export default function SmartCropApp() {
       </section>
 
       {/* ═══ HOW IT WORKS ═══ */}
-      <section id="how" style={{ background: '#020b06', padding: '6rem 1.5rem' }}>
+      <section id="how" style={{ background: 'var(--bg-section-alt)', padding: '6rem 1.5rem' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <div className="section-label" style={{ justifyContent: 'center' }}>{t.howLabel}</div>
-            <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: 'clamp(2rem, 3.5vw, 3rem)', fontWeight: 900, color: '#ecfdf5', letterSpacing: '-0.02em', marginBottom: '1rem' }}>
+            <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: 'clamp(2rem, 3.5vw, 3rem)', fontWeight: 900, color: 'var(--text-primary)', letterSpacing: '-0.02em', marginBottom: '1rem' }}>
               {t.howHeadline} <span className="gradient-text">{t.howHeadline2}</span>
             </h2>
-            <p style={{ color: 'rgba(167, 243, 208, 0.5)', fontSize: '1.1rem' }}>{t.howDesc}</p>
+            <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>{t.howDesc}</p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', position: 'relative' }}>
@@ -779,13 +778,13 @@ export default function SmartCropApp() {
                 <div className="step-number">{s.step}</div>
                 <div style={{
                   width: '56px', height: '56px', borderRadius: '16px',
-                  background: 'rgba(16, 185, 129, 0.08)',
-                  border: '1px solid rgba(16, 185, 129, 0.15)',
+                  background: 'var(--bg-section-alt)',
+                  border: '1px solid var(--border-light)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontSize: '1.75rem', marginBottom: '1.5rem',
                 }}>{s.icon}</div>
-                <h3 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.25rem', color: '#ecfdf5', marginBottom: '0.75rem' }}>{s.title}</h3>
-                <p style={{ color: 'rgba(167, 243, 208, 0.45)', fontSize: '0.875rem', lineHeight: 1.7 }}>{s.desc}</p>
+                <h3 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.25rem', color: 'var(--text-primary)', marginBottom: '0.75rem' }}>{s.title}</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', lineHeight: 1.7 }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -804,8 +803,8 @@ export default function SmartCropApp() {
                 fontSize: '1.1rem',
               }}>🌿</div>
               <div>
-                <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, color: '#ecfdf5', fontSize: '0.95rem' }}>SmartCrop AI</div>
-                <div style={{ fontSize: '0.7rem', color: 'rgba(167, 243, 208, 0.4)' }}>{t.footerTagline}</div>
+                <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, color: 'var(--text-primary)', fontSize: '0.95rem' }}>SmartCrop AI</div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{t.footerTagline}</div>
               </div>
             </div>
             <div style={{ display: 'flex', gap: '1.5rem' }}>
@@ -815,12 +814,12 @@ export default function SmartCropApp() {
                 { icon: <Linkedin size={18} />, href: 'https://linkedin.com' },
               ].map((s, i) => (
                 <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" style={{
-                  color: 'rgba(167, 243, 208, 0.4)',
+                  color: 'var(--text-muted)',
                   transition: 'color 0.2s',
                   display: 'flex',
                 }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#34d399'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(167, 243, 208, 0.4)'}
+                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-primary)'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
                 >
                   {s.icon}
                 </a>
@@ -842,7 +841,7 @@ export default function SmartCropApp() {
           {!cropResult ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'rgba(167, 243, 208, 0.6)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                   {t.cropCityLabel}
                 </label>
                 <input
@@ -855,7 +854,7 @@ export default function SmartCropApp() {
                 />
               </div>
               <div className="result-card" style={{ background: 'rgba(16,185,129,0.04)', border: '1px solid rgba(16,185,129,0.1)', padding: '1rem 1.25rem' }}>
-                <p style={{ fontSize: '0.8rem', color: 'rgba(167, 243, 208, 0.5)', lineHeight: 1.6 }}>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
                   {t.cropHint}
                 </p>
               </div>
@@ -872,25 +871,25 @@ export default function SmartCropApp() {
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <div className="result-card result-card-success">
-                <p style={{ fontSize: '0.75rem', color: 'rgba(167, 243, 208, 0.5)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.5rem' }}>
+                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.5rem' }}>
                   {t.cropResultLabel}
                 </p>
-                <h3 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: '2rem', color: '#34d399', marginBottom: '1rem' }}>
+                <h3 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: '2rem', color: 'var(--color-primary)', marginBottom: '1rem' }}>
                   {cropResult.crop}
                 </h3>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <div className="progress-track" style={{ flex: 1 }}>
                     <div className="progress-fill" style={{
                       width: `${cropResult.confidence}%`,
-                      background: 'linear-gradient(90deg, #059669, #34d399)',
+                      background: 'linear-gradient(90deg, #059669, var(--color-primary))',
                     }} />
                   </div>
-                  <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#34d399', whiteSpace: 'nowrap' }}>{cropResult.confidence}%</span>
+                  <span style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--color-primary)', whiteSpace: 'nowrap' }}>{cropResult.confidence}%</span>
                 </div>
               </div>
 
               <div>
-                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'rgba(167, 243, 208, 0.5)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.75rem' }}>Alternative Crops</p>
+                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.75rem' }}>Alternative Crops</p>
                 <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                   {cropResult.alternatives.map((a) => (
                     <span key={a} className="badge badge-amber">{a}</span>
@@ -899,12 +898,12 @@ export default function SmartCropApp() {
               </div>
 
               <div>
-                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'rgba(167, 243, 208, 0.5)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.75rem' }}>Farming Intelligence</p>
+                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.75rem' }}>Farming Intelligence</p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   {cropResult.tips.map((t, i) => (
-                    <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', padding: '0.75rem', background: 'rgba(255,255,255,0.03)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <span style={{ color: '#34d399', fontWeight: 800, flexShrink: 0 }}>✓</span>
-                      <span style={{ fontSize: '0.85rem', color: 'rgba(167, 243, 208, 0.6)', lineHeight: 1.5 }}>{t}</span>
+                    <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', padding: '0.75rem', background: 'var(--border-light)', borderRadius: '10px', border: '1px solid var(--border-light)' }}>
+                      <span style={{ color: 'var(--color-primary)', fontWeight: 800, flexShrink: 0 }}>✓</span>
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>{t}</span>
                     </div>
                   ))}
                 </div>
@@ -941,8 +940,8 @@ export default function SmartCropApp() {
                   ) : (
                     <div style={{ paddingTop: '1rem', paddingBottom: '1rem' }}>
                       <div style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>📷</div>
-                      <p style={{ fontWeight: 700, color: '#a7f3d0', marginBottom: '0.5rem', fontSize: '0.95rem' }}>Click to upload leaf photo</p>
-                      <p style={{ fontSize: '0.75rem', color: 'rgba(167, 243, 208, 0.3)' }}>JPG, PNG — Max 10MB</p>
+                      <p style={{ fontWeight: 700, color: 'var(--color-primary)', marginBottom: '0.5rem', fontSize: '0.95rem' }}>Click to upload leaf photo</p>
+                      <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>JPG, PNG — Max 10MB</p>
                     </div>
                   )}
                 </div>
@@ -950,7 +949,7 @@ export default function SmartCropApp() {
               </label>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'rgba(167, 243, 208, 0.6)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                   Plant Type
                 </label>
                 <select
@@ -995,8 +994,8 @@ export default function SmartCropApp() {
               </div>
 
               <div className="result-card result-card-success">
-                <p style={{ fontWeight: 700, color: '#6ee7b7', marginBottom: '0.5rem', fontSize: '0.875rem' }}>💊 Treatment Protocol</p>
-                <p style={{ fontSize: '0.85rem', color: 'rgba(167, 243, 208, 0.65)', lineHeight: 1.65 }}>{diseaseResult.treatment}</p>
+                <p style={{ fontWeight: 700, color: 'var(--color-primary-light)', marginBottom: '0.5rem', fontSize: '0.875rem' }}>💊 Treatment Protocol</p>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>{diseaseResult.treatment}</p>
               </div>
 
               <div className="result-card result-card-info">
@@ -1027,7 +1026,7 @@ export default function SmartCropApp() {
           {!weatherData ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'rgba(167, 243, 208, 0.6)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                   City Name
                 </label>
                 <input
@@ -1066,7 +1065,7 @@ export default function SmartCropApp() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
                   <span style={{ fontSize: '4.5rem', lineHeight: 1 }}>{weatherIcon(weatherData.code)}</span>
                   <div>
-                    <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: '3.5rem', color: '#ecfdf5', lineHeight: 1 }}>
+                    <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: '3.5rem', color: 'var(--text-primary)', lineHeight: 1 }}>
                       {weatherData.temp}°C
                     </div>
                     <div style={{ fontSize: '0.85rem', color: 'rgba(147, 197, 253, 0.6)', marginTop: '0.25rem' }}>
@@ -1077,19 +1076,19 @@ export default function SmartCropApp() {
               </div>
 
               <div>
-                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'rgba(167, 243, 208, 0.5)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.75rem' }}>
+                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.75rem' }}>
                   5-Day Forecast
                 </p>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.625rem' }}>
                   {weatherData.forecast.map((d, i) => (
                     <div key={i} className="forecast-day">
-                      <p style={{ fontSize: '0.7rem', color: 'rgba(167, 243, 208, 0.4)', fontWeight: 600 }}>
+                      <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600 }}>
                         {new Date(d.date).toLocaleDateString('en', { weekday: 'short' })}
                       </p>
-                      <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.25rem', color: '#ecfdf5', margin: '0.375rem 0' }}>
+                      <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.25rem', color: 'var(--text-primary)', margin: '0.375rem 0' }}>
                         {Math.round(d.high)}°
                       </p>
-                      <p style={{ fontSize: '0.7rem', color: 'rgba(167, 243, 208, 0.35)' }}>{Math.round(d.low)}°</p>
+                      <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{Math.round(d.low)}°</p>
                       {d.rain > 0 && (
                         <p style={{ fontSize: '0.65rem', color: '#7dd3fc', marginTop: '0.25rem' }}>💧{d.rain}mm</p>
                       )}
@@ -1120,7 +1119,7 @@ export default function SmartCropApp() {
           {!fertResult ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'rgba(167, 243, 208, 0.6)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                   Select Crop
                 </label>
                 <select
@@ -1151,7 +1150,7 @@ export default function SmartCropApp() {
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <h3 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, color: '#ecfdf5', fontSize: '1.25rem' }}>
+              <h3 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, color: 'var(--text-primary)', fontSize: '1.25rem' }}>
                 Fertilizer Plan for <span style={{ color: '#fcd34d' }}>{fertCrop}</span>
               </h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
@@ -1165,9 +1164,9 @@ export default function SmartCropApp() {
                     borderRadius: '14px', padding: '1.25rem', textAlign: 'center',
                   }}>
                     <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: '1.75rem', color: n.color }}>{n.key}</div>
-                    <div style={{ fontSize: '0.7rem', color: 'rgba(167, 243, 208, 0.4)', fontWeight: 600, marginTop: '2px' }}>{n.label}</div>
-                    <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.1rem', color: '#ecfdf5', marginTop: '0.5rem' }}>{n.val}</div>
-                    <div style={{ fontSize: '0.65rem', color: 'rgba(167, 243, 208, 0.3)', marginTop: '2px' }}>kg/hectare</div>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, marginTop: '2px' }}>{n.label}</div>
+                    <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-primary)', marginTop: '0.5rem' }}>{n.val}</div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '2px' }}>kg/hectare</div>
                   </div>
                 ))}
               </div>
@@ -1204,14 +1203,14 @@ export default function SmartCropApp() {
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '0.875rem' }}>
                   <span style={{ fontSize: '1.75rem' }}>{s.icon}</span>
-                  <h4 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, color: '#ecfdf5', fontSize: '1rem' }}>{s.season}</h4>
+                  <h4 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, color: 'var(--text-primary)', fontSize: '1rem' }}>{s.season}</h4>
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                   {s.crops.map((c) => (
                     <span key={c} style={{
                       background: 'rgba(255, 255, 255, 0.07)',
                       border: '1px solid rgba(255, 255, 255, 0.12)',
-                      color: '#a7f3d0', fontSize: '0.8rem', fontWeight: 600,
+                      color: 'var(--color-primary)', fontSize: '0.8rem', fontWeight: 600,
                       padding: '0.375rem 0.875rem', borderRadius: '99px',
                     }}>{c}</span>
                   ))}
@@ -1234,13 +1233,13 @@ export default function SmartCropApp() {
             {irrigationTips.map((t, i) => (
               <div key={i} className="result-card" style={{ padding: '1.25rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
-                  <h4 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, color: '#ecfdf5', fontSize: '1.1rem' }}>{t.crop}</h4>
+                  <h4 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, color: 'var(--text-primary)', fontSize: '1.1rem' }}>{t.crop}</h4>
                   <span className="badge badge-sky">{t.method}</span>
                 </div>
-                <p style={{ fontSize: '0.8rem', color: 'rgba(167, 243, 208, 0.45)', marginBottom: '0.625rem' }}>
-                  💧 Water Need: <span style={{ fontWeight: 600, color: 'rgba(167, 243, 208, 0.7)' }}>{t.water}</span>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.625rem' }}>
+                  💧 Water Need: <span style={{ fontWeight: 600, color: 'var(--text-muted)' }}>{t.water}</span>
                 </p>
-                <p style={{ fontSize: '0.85rem', color: 'rgba(167, 243, 208, 0.5)', lineHeight: 1.65 }}>{t.tip}</p>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>{t.tip}</p>
               </div>
             ))}
           </div>
@@ -1265,8 +1264,8 @@ function Modal({ title, subtitle, children, onClose, wide }) {
       >
         <div className="modal-header">
           <div>
-            <h2 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.2rem', color: '#ecfdf5' }}>{title}</h2>
-            {subtitle && <p style={{ fontSize: '0.75rem', color: 'rgba(167, 243, 208, 0.45)', marginTop: '2px' }}>{subtitle}</p>}
+            <h2 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: '1.2rem', color: 'var(--text-primary)' }}>{title}</h2>
+            {subtitle && <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '2px' }}>{subtitle}</p>}
           </div>
           <button
             onClick={onClose}
@@ -1275,11 +1274,11 @@ function Modal({ title, subtitle, children, onClose, wide }) {
               background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid rgba(255, 255, 255, 0.08)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: 'pointer', color: 'rgba(167, 243, 208, 0.6)',
+              cursor: 'pointer', color: 'var(--text-muted)',
               transition: 'all 0.2s ease', flexShrink: 0,
             }}
             onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'; e.currentTarget.style.color = '#fca5a5'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'; e.currentTarget.style.color = 'rgba(167, 243, 208, 0.6)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'; e.currentTarget.style.color = 'var(--text-muted)'; }}
           >
             <X size={16} />
           </button>

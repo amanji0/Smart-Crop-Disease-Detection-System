@@ -59,6 +59,7 @@ export default function SmartCropApp() {
   });
 
   const handleRoleSelect = async (role) => {
+    setLoadingRole(true);
     try {
       const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/auth/google?token=${tempGoogleToken}&role=${role}`);
       setUser(res.data.user);
@@ -66,7 +67,9 @@ export default function SmartCropApp() {
       setShowRoleSelect(false);
       setTempGoogleToken(null);
     } catch (err) {
-      alert('Authentication error via Backend');
+      alert('Authentication error: ' + (err.response?.data?.detail || err.message));
+    } finally {
+      setLoadingRole(false);
     }
   };
 
@@ -92,6 +95,7 @@ export default function SmartCropApp() {
   const [activeModal, setActiveModal] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [lang, setLang] = useState('en'); // 'en' | 'hi'
+  const [loadingRole, setLoadingRole] = useState(false);
 
   // Shorthand translation accessor
   const t = T[lang];
@@ -1156,17 +1160,19 @@ export default function SmartCropApp() {
       {/* ROLE SELECTION MODAL */}
       {showRoleSelect && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
-          <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl relative">
-            <h2 className="text-2xl font-bold mb-2 text-[var(--text-primary)]">Select Your Role</h2>
-            <p className="text-[var(--text-muted)] mb-6">Are you a farmer looking to sell crops, or a vendor looking to buy?</p>
-            <div className="grid grid-cols-2 gap-4">
-              <button onClick={() => handleRoleSelect('farmer')} className="p-4 border-2 border-[var(--border-light)] rounded-xl hover:border-[var(--color-primary)] hover:bg-emerald-50 transition-all flex flex-col items-center">
-                <div className="text-3xl mb-2">👨‍🌾</div>
-                <div className="font-bold text-[var(--text-primary)]">Farmer</div>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 relative z-10 animate-fade-in-up m-4">
+            <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">Select Your Role</h3>
+            <p className="text-sm text-[var(--text-muted)] mb-6">Are you a farmer looking to sell crops, or a vendor looking to buy?</p>
+            
+            <div className="flex gap-4">
+              <button onClick={() => handleRoleSelect('farmer')} disabled={loadingRole} className="p-4 border-2 border-[var(--border-light)] rounded-xl hover:border-[var(--color-primary)] hover:bg-emerald-50 transition-all flex flex-col items-center w-1/2 disabled:opacity-50">
+                <span className="text-3xl mb-2">🧑‍🌾</span>
+                <span className="font-bold text-[var(--text-primary)]">{loadingRole ? '...' : 'Farmer'}</span>
               </button>
-              <button onClick={() => handleRoleSelect('vendor')} className="p-4 border-2 border-[var(--border-light)] rounded-xl hover:border-[var(--color-primary)] hover:bg-emerald-50 transition-all flex flex-col items-center">
-                <div className="text-3xl mb-2">🏪</div>
-                <div className="font-bold text-[var(--text-primary)]">Vendor</div>
+              
+              <button onClick={() => handleRoleSelect('vendor')} disabled={loadingRole} className="p-4 border-2 border-[var(--border-light)] rounded-xl hover:border-[var(--color-primary)] hover:bg-emerald-50 transition-all flex flex-col items-center w-1/2 disabled:opacity-50">
+                <span className="text-3xl mb-2">🏪</span>
+                <span className="font-bold text-[var(--text-primary)]">{loadingRole ? '...' : 'Vendor'}</span>
               </button>
             </div>
           </div>

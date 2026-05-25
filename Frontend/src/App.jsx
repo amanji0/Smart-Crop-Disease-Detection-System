@@ -406,7 +406,7 @@ export default function SmartCropApp() {
                   style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }} 
                   title="Profile Menu"
                 >
-                  <img src="/login-icon.png" alt="Menu" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover' }} />
+                  <img src="/login-icon.png" alt="Menu" style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
                 </button>
                 {showAuthMenu && (
                   <div style={{
@@ -435,14 +435,6 @@ export default function SmartCropApp() {
                         <button onClick={() => { loginWithGoogle(); setShowAuthMenu(false); }} className="btn btn-primary w-full justify-center flex items-center gap-2">
                           Login with Google
                         </button>
-                        <div className="flex gap-2">
-                          <button onClick={() => handleDemoLogin('farmer')} className="btn bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 w-full justify-center text-xs px-2 py-2">
-                            Demo Farmer
-                          </button>
-                          <button onClick={() => handleDemoLogin('vendor')} className="btn bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 w-full justify-center text-xs px-2 py-2">
-                            Demo Vendor
-                          </button>
-                        </div>
                       </div>
                     )}
                   </div>

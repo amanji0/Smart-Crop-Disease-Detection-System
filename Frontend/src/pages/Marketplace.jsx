@@ -84,7 +84,7 @@ const Marketplace = ({ user, token }) => {
           email: user.email,
         },
         theme: {
-          color: "#10b981"
+          color: "#34d399"
         }
       };
       
@@ -96,77 +96,235 @@ const Marketplace = ({ user, token }) => {
     }
   };
 
+  /* ── Not Logged In ── */
   if (!user) {
     return (
-      <div className="pt-32 text-center">
-        <h2 className="text-3xl font-bold mb-4">Marketplace Access</h2>
-        <p>Please login via the Google Login button in the top right to access the Marketplace.</p>
-      </div>
+      <section className="section" style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="section-container animate-fade-in-up" style={{ textAlign: 'center', maxWidth: 520 }}>
+          <div className="glass-card" style={{ padding: '3rem 2.5rem' }}>
+            {/* Lock icon */}
+            <div style={{
+              width: 64, height: 64, borderRadius: 'var(--radius-xl)',
+              background: 'var(--bg-glass)', display: 'flex', alignItems: 'center',
+              justifyContent: 'center', margin: '0 auto 1.5rem', fontSize: 28
+            }}>🔒</div>
+            <h2 style={{
+              fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)',
+              marginBottom: '0.75rem', letterSpacing: '-0.025em'
+            }}>Marketplace Access</h2>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+              Please login via the Google Login button in the top right to access the Marketplace.
+            </p>
+          </div>
+        </div>
+      </section>
     );
   }
 
+  /* ── Main Marketplace ── */
   return (
-    <div className="pt-24 pb-20 px-4 max-w-6xl mx-auto">
-      <div className="flex justify-between items-end mb-10">
-        <div>
-          <span className="badge badge-emerald mb-4 inline-block">Direct Trade</span>
-          <h1 className="text-4xl md:text-5xl font-black text-[var(--text-primary)]">B2B Marketplace</h1>
-          <p className="text-[var(--text-secondary)] mt-2 text-lg">
-            {user.role === 'farmer' ? 'List your crops for direct sale to verified vendors.' : 'Source fresh crops directly from verified farmers.'}
+    <section className="section" style={{ paddingTop: '7rem', paddingBottom: '5rem' }}>
+      <div className="section-container" style={{ maxWidth: 1200 }}>
+
+        {/* ── Hero Header ── */}
+        <div className="animate-fade-in-up stagger-1" style={{ marginBottom: '3.5rem' }}>
+          <span className="badge-emerald" style={{ marginBottom: '1rem', display: 'inline-block' }}>Direct Trade</span>
+          <h1 style={{
+            fontSize: 'clamp(2.25rem, 5vw, 3.25rem)', fontWeight: 900,
+            color: 'var(--text-primary)', letterSpacing: '-0.04em',
+            lineHeight: 1.1, marginBottom: '0.75rem'
+          }}>B2B Marketplace</h1>
+          <p style={{
+            color: 'var(--text-secondary)', fontSize: '1.125rem',
+            maxWidth: 560, lineHeight: 1.6
+          }}>
+            {user.role === 'farmer'
+              ? 'List your crops for direct sale to verified vendors.'
+              : 'Source fresh crops directly from verified farmers.'}
           </p>
         </div>
+
+        {/* ── Farmer Post Form ── */}
+        {user.role === 'farmer' && (
+          <div className="glass-card animate-fade-in-up stagger-2" style={{ padding: '2rem 2.5rem', marginBottom: '3.5rem' }}>
+            <h2 style={{
+              fontSize: '1.375rem', fontWeight: 700, color: 'var(--text-primary)',
+              marginBottom: '1.75rem', letterSpacing: '-0.02em'
+            }}>Post New Crop</h2>
+
+            <form onSubmit={handlePostListing} style={{
+              display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+              gap: '1.25rem', alignItems: 'end'
+            }}>
+              <div>
+                <label className="form-label">Crop Name</label>
+                <input
+                  type="text" required
+                  value={newCrop.name}
+                  onChange={e => setNewCrop({ ...newCrop, name: e.target.value })}
+                  className="form-input"
+                  placeholder="e.g. Wheat"
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <label className="form-label">Quantity (kg)</label>
+                <input
+                  type="number" required
+                  value={newCrop.qty}
+                  onChange={e => setNewCrop({ ...newCrop, qty: e.target.value })}
+                  className="form-input"
+                  placeholder="e.g. 500"
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <label className="form-label">Price / kg (₹)</label>
+                <input
+                  type="number" required
+                  value={newCrop.price}
+                  onChange={e => setNewCrop({ ...newCrop, price: e.target.value })}
+                  className="form-input"
+                  placeholder="e.g. 25"
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <button type="submit" className="btn-primary" style={{
+                height: 50, width: '100%', fontSize: '0.95rem'
+              }}>List Crop</button>
+            </form>
+          </div>
+        )}
+
+        {/* ── Listings Header ── */}
+        <div className="animate-fade-in-up stagger-3" style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          marginBottom: '1.75rem'
+        }}>
+          <h2 style={{
+            fontSize: '1.375rem', fontWeight: 700, color: 'var(--text-primary)',
+            letterSpacing: '-0.02em'
+          }}>Available Listings</h2>
+          <span style={{
+            color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: 500
+          }}>
+            {!loading && `${listings.length} crop${listings.length !== 1 ? 's' : ''}`}
+          </span>
+        </div>
+
+        {/* ── Loading State ── */}
+        {loading ? (
+          <div className="glass-card animate-fade-in-up" style={{
+            padding: '4rem 2rem', textAlign: 'center'
+          }}>
+            <div style={{
+              width: 40, height: 40, border: '3px solid var(--border-subtle)',
+              borderTopColor: 'var(--color-primary)', borderRadius: '50%',
+              animation: 'spin 0.8s linear infinite', margin: '0 auto 1rem'
+            }} />
+            <p style={{ color: 'var(--text-secondary)' }}>Loading market…</p>
+            <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+          </div>
+        ) : (
+          <>
+            {/* ── Listings Grid ── */}
+            {listings.length === 0 ? (
+              <div className="glass-card animate-fade-in-up" style={{
+                padding: '4rem 2rem', textAlign: 'center'
+              }}>
+                <div style={{ fontSize: 40, marginBottom: '1rem' }}>🌾</div>
+                <p style={{ color: 'var(--text-muted)', fontSize: '1rem' }}>
+                  No crops currently listed.
+                </p>
+              </div>
+            ) : (
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+                gap: '1.5rem'
+              }}>
+                {listings.map((item, idx) => (
+                  <div
+                    key={item.id}
+                    className={`glass-card animate-fade-in-up stagger-${Math.min(idx + 1, 6)}`}
+                    style={{
+                      padding: '1.75rem 1.75rem 1.5rem',
+                      display: 'flex', flexDirection: 'column',
+                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                      cursor: 'default',
+                      position: 'relative', overflow: 'hidden'
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.transform = 'translateY(-4px)';
+                      e.currentTarget.style.boxShadow = '0 12px 40px rgba(52,211,153,0.08)';
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
+                    {/* Price badge */}
+                    <div style={{
+                      position: 'absolute', top: 0, right: 0,
+                      background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-dark))',
+                      color: '#000', fontWeight: 700, fontSize: '0.8rem',
+                      padding: '0.4rem 1rem', borderBottomLeftRadius: 'var(--radius-md)'
+                    }}>
+                      ₹{item.price_per_kg}/kg
+                    </div>
+
+                    {/* Crop info */}
+                    <h3 style={{
+                      fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-primary)',
+                      marginBottom: '0.25rem', letterSpacing: '-0.015em'
+                    }}>{item.crop_name}</h3>
+                    <p style={{
+                      color: 'var(--text-muted)', fontSize: '0.8rem',
+                      marginBottom: '1.25rem'
+                    }}>Farmer ID: {item.farmer_id}</p>
+
+                    {/* Stock section */}
+                    <div style={{
+                      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                      padding: '1rem', borderRadius: 'var(--radius-md)',
+                      background: 'var(--bg-glass)', marginBottom: '1.25rem'
+                    }}>
+                      <div>
+                        <p style={{
+                          color: 'var(--text-muted)', fontSize: '0.75rem',
+                          fontWeight: 500, textTransform: 'uppercase',
+                          letterSpacing: '0.06em', marginBottom: '0.2rem'
+                        }}>Available Stock</p>
+                        <p style={{
+                          color: 'var(--text-primary)', fontWeight: 700,
+                          fontSize: '1.15rem'
+                        }}>{item.quantity_kg} kg</p>
+                      </div>
+                      <div style={{
+                        width: 44, height: 44, borderRadius: 'var(--radius-md)',
+                        background: 'var(--bg-glass)', display: 'flex',
+                        alignItems: 'center', justifyContent: 'center', fontSize: 22
+                      }}>📦</div>
+                    </div>
+
+                    {/* Buy button for vendors */}
+                    {user.role === 'vendor' && (
+                      <button
+                        onClick={() => handleBuy(item)}
+                        className="btn-primary"
+                        style={{ width: '100%', marginTop: 'auto', height: 48, fontSize: '0.95rem' }}
+                      >
+                        Buy Now
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </div>
-
-      {user.role === 'farmer' && (
-        <div className="bg-[var(--bg-card)] border border-[var(--border-light)] p-8 rounded-2xl mb-12 shadow-sm">
-          <h2 className="text-2xl font-bold mb-6">Post New Crop</h2>
-          <form onSubmit={handlePostListing} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-            <div>
-              <label className="block text-sm font-bold text-[var(--text-muted)] mb-2">Crop Name</label>
-              <input type="text" required value={newCrop.name} onChange={e => setNewCrop({...newCrop, name: e.target.value})} className="form-input w-full" placeholder="e.g. Wheat" />
-            </div>
-            <div>
-              <label className="block text-sm font-bold text-[var(--text-muted)] mb-2">Quantity (kg)</label>
-              <input type="number" required value={newCrop.qty} onChange={e => setNewCrop({...newCrop, qty: e.target.value})} className="form-input w-full" placeholder="e.g. 500" />
-            </div>
-            <div>
-              <label className="block text-sm font-bold text-[var(--text-muted)] mb-2">Price / kg (₹)</label>
-              <input type="number" required value={newCrop.price} onChange={e => setNewCrop({...newCrop, price: e.target.value})} className="form-input w-full" placeholder="e.g. 25" />
-            </div>
-            <button type="submit" className="btn btn-primary w-full h-[50px]">List Crop</button>
-          </form>
-        </div>
-      )}
-
-      <h2 className="text-2xl font-bold mb-6">Available Listings</h2>
-      {loading ? <p>Loading market...</p> : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {listings.map(item => (
-            <div key={item.id} className="bg-white border border-[var(--border-light)] rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-bl-xl font-bold text-sm">
-                ₹{item.price_per_kg}/kg
-              </div>
-              <h3 className="text-xl font-bold mb-1">{item.crop_name}</h3>
-              <p className="text-[var(--text-muted)] mb-4 text-sm">Farmer ID: {item.farmer_id}</p>
-              
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <p className="text-sm text-[var(--text-secondary)]">Available Stock</p>
-                  <p className="font-bold text-lg">{item.quantity_kg} kg</p>
-                </div>
-              </div>
-
-              {user.role === 'vendor' && (
-                <button onClick={() => handleBuy(item)} className="w-full bg-slate-900 text-white font-bold py-3 rounded-lg hover:bg-slate-800 transition-colors">
-                  Buy Now
-                </button>
-              )}
-            </div>
-          ))}
-          {listings.length === 0 && <p className="text-[var(--text-muted)] col-span-3">No crops currently listed.</p>}
-        </div>
-      )}
-    </div>
+    </section>
   );
 };
 

@@ -490,6 +490,20 @@ export default function SmartCropApp() {
         <div className="hero-orb hero-orb-3" />
         <div className="hero-grid" />
 
+        {/* Floating 3D Crop Images */}
+        <div className="hero-crop-float crop-left-1">
+          <img src="/crops/wheat.png" alt="Wheat" />
+        </div>
+        <div className="hero-crop-float crop-left-2">
+          <img src="/crops/rice.png" alt="Rice" />
+        </div>
+        <div className="hero-crop-float crop-right-1">
+          <img src="/crops/tomato.png" alt="Tomato" />
+        </div>
+        <div className="hero-crop-float crop-right-2">
+          <img src="/crops/corn.png" alt="Corn" />
+        </div>
+
         <div className="section-container" style={{ paddingTop: '160px', paddingBottom: '120px', position: 'relative', zIndex: 1 }}>
           {/* Centered hero content — Apple style */}
           <div style={{ textAlign: 'center', maxWidth: '900px', margin: '0 auto' }}>
@@ -665,27 +679,58 @@ export default function SmartCropApp() {
         </div>
       </section>
 
-      {/* ═══ KNOW YOUR CROPS ═══ */}
-      <section className="section">
+      {/* ═══ 3D CROP SHOWCASE ═══ */}
+      <section className="section crop-showcase-section">
         <div className="section-container">
           <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-            <span className="section-label">{t.knowCropsLabel || 'CROP LIBRARY'}</span>
+            <span className="section-label">{t.knowCropsLabel || 'CROP GALLERY'}</span>
             <h2 className="section-title">{t.knowCropsTitle || 'Know Your Crops'}</h2>
             <p className="section-subtitle" style={{ margin: '0 auto' }}>
-              Explore our database of 22 crops with detailed growing information.
+              Explore India's most important crops in stunning detail — powered by AI intelligence.
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '16px' }}>
+          {/* 3D Crop Cards */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px', marginBottom: '48px' }}>
+            {[
+              { name: 'Wheat', season: 'Rabi • Oct-Mar', img: '/crops/wheat.png', tag: 'STAPLE GRAIN', desc: 'India\'s second most important cereal crop' },
+              { name: 'Rice', season: 'Kharif • Jun-Nov', img: '/crops/rice.png', tag: 'STAPLE GRAIN', desc: 'The lifeline of Indian agriculture' },
+              { name: 'Tomato', season: 'Year Round', img: '/crops/tomato.png', tag: 'VEGETABLE', desc: 'Essential kitchen crop with high demand' },
+              { name: 'Cotton', season: 'Kharif • Apr-Oct', img: '/crops/cotton.png', tag: 'CASH CROP', desc: 'White gold — India\'s fiber backbone' },
+              { name: 'Corn', season: 'Kharif • Jun-Sep', img: '/crops/corn.png', tag: 'CEREAL', desc: 'Versatile crop for food and livestock feed' },
+              { name: 'Sugarcane', season: 'Year Round', img: '/crops/sugarcane.png', tag: 'CASH CROP', desc: 'Sweet gold of tropical India' },
+            ].map((crop, i) => (
+              <div key={crop.name} className={`crop-3d-card animate-fade-in-up stagger-${(i % 6) + 1}`} style={{ opacity: 0 }}>
+                <div className="crop-3d-image-wrapper">
+                  <img src={crop.img} alt={crop.name} loading="lazy" />
+                </div>
+                <div className="crop-3d-info">
+                  <div className="crop-3d-name">{crop.name}</div>
+                  <div className="crop-3d-season">{crop.season}</div>
+                  <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '6px', lineHeight: 1.5 }}>{crop.desc}</p>
+                  <div className="crop-3d-badge">🌱 {crop.tag}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Original crop grid (smaller, supplementary) */}
+          <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.15rem', color: 'var(--text-primary)', marginBottom: '6px' }}>
+              All 22 Supported Crops
+            </h3>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Our AI can analyze and recommend across these crop varieties</p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: '12px' }}>
             {crops22.map((c, i) => (
               <div
                 key={c.name}
                 className={`crop-card animate-fade-in-up stagger-${(i % 6) + 1}`}
                 style={{ opacity: 0 }}
               >
-                <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>{c.emoji}</div>
-                <h4 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)', marginBottom: '4px' }}>{c.name}</h4>
-                <span className="badge badge-emerald" style={{ fontSize: '0.65rem' }}>{c.season}</span>
+                <div style={{ fontSize: '2rem', marginBottom: '6px' }}>{c.emoji}</div>
+                <h4 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)', marginBottom: '3px' }}>{c.name}</h4>
+                <span className="badge badge-emerald" style={{ fontSize: '0.6rem' }}>{c.season}</span>
               </div>
             ))}
           </div>

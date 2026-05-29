@@ -466,6 +466,42 @@ export default function SmartCropApp() {
             <Link to="/" onClick={() => setMobileMenuOpen(false)} className="nav-link" style={{ display: 'block' }}>Home</Link>
             <Link to="/marketplace" onClick={() => setMobileMenuOpen(false)} className="nav-link" style={{ display: 'block' }}>{t.tryMarket || 'Marketplace'}</Link>
             <Link to="/schemes" onClick={() => setMobileMenuOpen(false)} className="nav-link" style={{ display: 'block' }}>{t.trySchemes || 'Govt Schemes'}</Link>
+            
+            <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '8px 0' }} />
+
+            {/* Mobile Auth Section */}
+            {user ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '8px 0' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <img src={user.picture} alt="Profile" style={{ width: '40px', height: '40px', borderRadius: '50%', border: '2px solid var(--color-primary)' }} />
+                  <div>
+                    <div style={{ fontWeight: '600', color: 'var(--text-primary)' }}>{user.name}</div>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{user.role ? `Role: ${user.role}` : 'No role selected'}</div>
+                  </div>
+                </div>
+                {!user.role && (
+                  <button onClick={() => { setShowRoleSelect(true); setMobileMenuOpen(false); }} className="btn-outline" style={{ width: '100%', padding: '10px' }}>
+                    Select Role
+                  </button>
+                )}
+                <button onClick={() => { logout(); setMobileMenuOpen(false); }} className="btn-outline" style={{ width: '100%', padding: '10px', color: '#ef4444', borderColor: 'rgba(239, 68, 68, 0.2)' }}>
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div style={{ padding: '8px 0' }}>
+                <button
+                  onClick={() => { loginWithGoogle(); setMobileMenuOpen(false); }}
+                  className="btn-primary"
+                  style={{ width: '100%', justifyContent: 'center' }}
+                >
+                  Login with Google
+                </button>
+              </div>
+            )}
+
+            <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '8px 0' }} />
+
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '8px' }}>
               <select value={lang} onChange={(e) => setLang(e.target.value)} className="lang-select">
                 {supportedLanguages.map(l => <option key={l.code} value={l.code}>{l.name}</option>)}

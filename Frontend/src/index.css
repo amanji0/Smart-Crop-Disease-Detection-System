@@ -267,25 +267,25 @@ body {
    ═══════════════════════════════════════════════════════════════ */
 
 /* -- Hero in light mode -- */
-:root .hero-gradient {
+html:not(.dark) .hero-gradient {
   background:
     radial-gradient(ellipse 80% 60% at 50% -10%, rgba(16, 185, 129, 0.18) 0%, transparent 60%),
     radial-gradient(ellipse 60% 50% at 20% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
     radial-gradient(ellipse 50% 40% at 80% 70%, rgba(168, 85, 247, 0.06) 0%, transparent 50%);
 }
 
-:root .hero-orb-1 { background: rgba(16, 185, 129, 0.15); }
-:root .hero-orb-2 { background: rgba(59, 130, 246, 0.1); }
-:root .hero-orb-3 { background: rgba(168, 85, 247, 0.08); }
+html:not(.dark) .hero-orb-1 { background: rgba(16, 185, 129, 0.15); }
+html:not(.dark) .hero-orb-2 { background: rgba(59, 130, 246, 0.1); }
+html:not(.dark) .hero-orb-3 { background: rgba(168, 85, 247, 0.08); }
 
-:root .hero-grid {
+html:not(.dark) .hero-grid {
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
 }
 
 /* -- Gradient text in light mode -- */
-:root .gradient-text {
+html:not(.dark) .gradient-text {
   background: linear-gradient(135deg, #059669 0%, #10b981 25%, #0f172a 50%, #059669 75%, #10b981 100%);
   background-size: 300% 300%;
   -webkit-background-clip: text;
@@ -294,136 +294,136 @@ body {
 }
 
 /* -- Navbar in light mode -- */
-:root .navbar.scrolled {
+html:not(.dark) .navbar.scrolled {
   background: rgba(250, 252, 255, 0.85);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
 }
 
-:root .nav-link:hover {
+html:not(.dark) .nav-link:hover {
   color: var(--text-primary);
   background: rgba(0, 0, 0, 0.04);
 }
 
 /* -- Glass cards in light mode -- */
-:root .glass-card {
+html:not(.dark) .glass-card {
   background: rgba(255, 255, 255, 0.8);
   box-shadow: var(--shadow-md);
 }
 
-:root .glass-card:hover {
+html:not(.dark) .glass-card:hover {
   background: rgba(255, 255, 255, 0.95);
   box-shadow: var(--shadow-glow-strong);
 }
 
-:root .feature-card {
+html:not(.dark) .feature-card {
   background: rgba(255, 255, 255, 0.8);
   box-shadow: var(--shadow-sm);
 }
 
-:root .feature-card:hover {
+html:not(.dark) .feature-card:hover {
   background: rgba(255, 255, 255, 0.98);
   box-shadow: var(--shadow-glow), var(--shadow-lg);
 }
 
-:root .stat-card {
+html:not(.dark) .stat-card {
   background: rgba(255, 255, 255, 0.8);
   box-shadow: var(--shadow-sm);
 }
 
-:root .stat-card:hover {
+html:not(.dark) .stat-card:hover {
   box-shadow: var(--shadow-glow), var(--shadow-md);
 }
 
-:root .step-card {
+html:not(.dark) .step-card {
   background: rgba(255, 255, 255, 0.85);
   box-shadow: var(--shadow-sm);
 }
 
-:root .step-card:hover {
+html:not(.dark) .step-card:hover {
   box-shadow: var(--shadow-glow), var(--shadow-lg);
 }
 
-:root .crop-card {
+html:not(.dark) .crop-card {
   background: rgba(255, 255, 255, 0.8);
   box-shadow: var(--shadow-sm);
 }
 
-:root .crop-card:hover {
+html:not(.dark) .crop-card:hover {
   background: rgba(255, 255, 255, 0.98);
   box-shadow: var(--shadow-glow), var(--shadow-md);
 }
 
 /* -- 3D crop cards light mode -- */
-:root .crop-3d-card {
+html:not(.dark) .crop-3d-card {
   background: rgba(255, 255, 255, 0.85);
   box-shadow: var(--shadow-md);
 }
 
-:root .crop-3d-card:hover {
+html:not(.dark) .crop-3d-card:hover {
   box-shadow:
     0 30px 60px rgba(0,0,0,0.12),
     0 0 40px rgba(16,185,129,0.12),
     inset 0 1px 0 rgba(255,255,255,0.9);
 }
 
-:root .crop-3d-image-wrapper {
+html:not(.dark) .crop-3d-image-wrapper {
   background: radial-gradient(ellipse at center, rgba(16,185,129,0.06) 0%, rgba(241,245,249,0.5) 70%);
 }
 
 /* -- Forms in light mode -- */
-:root .form-input {
+html:not(.dark) .form-input {
   background: rgba(255, 255, 255, 0.9);
   border-color: rgba(0, 0, 0, 0.12);
   box-shadow: var(--shadow-sm);
 }
 
-:root .form-input:focus {
+html:not(.dark) .form-input:focus {
   background: #ffffff;
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15), var(--shadow-sm);
 }
 
-:root .form-select {
+html:not(.dark) .form-select {
   background: rgba(255, 255, 255, 0.9);
   border-color: rgba(0, 0, 0, 0.12);
   box-shadow: var(--shadow-sm);
 }
 
-:root .upload-zone {
+html:not(.dark) .upload-zone {
   background: rgba(255, 255, 255, 0.6);
   border-color: rgba(0, 0, 0, 0.15);
 }
 
-:root .upload-zone:hover {
+html:not(.dark) .upload-zone:hover {
   background: rgba(16, 185, 129, 0.04);
   border-color: var(--color-primary);
 }
 
 /* -- Modal in light mode -- */
-:root .modal-backdrop {
+html:not(.dark) .modal-backdrop {
   background: rgba(15, 23, 42, 0.4);
 }
 
-:root .modal-panel {
+html:not(.dark) .modal-panel {
   box-shadow: var(--shadow-xl);
 }
 
-:root .modal-close {
+html:not(.dark) .modal-close {
   background: rgba(0, 0, 0, 0.04);
 }
 
-:root .modal-close:hover {
+html:not(.dark) .modal-close:hover {
   background: rgba(239, 68, 68, 0.08);
 }
 
 /* -- Progress bar in light mode -- */
-:root .progress-bar {
+html:not(.dark) .progress-bar {
   background: rgba(0, 0, 0, 0.06);
 }
 
 /* -- Language selector light -- */
-:root .lang-select {
+html:not(.dark) .lang-select {
   background: rgba(255, 255, 255, 0.8);
   border-color: rgba(0, 0, 0, 0.1);
   color: var(--text-secondary);
@@ -431,60 +431,60 @@ body {
 }
 
 /* -- Auth dropdown light -- */
-:root .auth-dropdown {
+html:not(.dark) .auth-dropdown {
   background: #ffffff;
   box-shadow: var(--shadow-xl);
   border-color: rgba(0, 0, 0, 0.08);
 }
 
 /* -- Scrollbar in light mode -- */
-:root ::-webkit-scrollbar-thumb {
+html:not(.dark) ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.12);
 }
 
-:root ::-webkit-scrollbar-thumb:hover {
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.2);
 }
 
 /* -- Buttons in light mode — richer -- */
-:root .btn-primary {
+html:not(.dark) .btn-primary {
   background: linear-gradient(135deg, #059669, #10b981);
   box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 }
 
-:root .btn-primary:hover {
+html:not(.dark) .btn-primary:hover {
   box-shadow: 0 8px 30px rgba(16, 185, 129, 0.35), 0 4px 12px rgba(0,0,0,0.08);
 }
 
-:root .btn-outline {
+html:not(.dark) .btn-outline {
   border-color: rgba(0, 0, 0, 0.15);
   background: rgba(255, 255, 255, 0.5);
 }
 
-:root .btn-outline:hover {
+html:not(.dark) .btn-outline:hover {
   background: rgba(16, 185, 129, 0.06);
   border-color: var(--color-primary);
   box-shadow: 0 4px 16px rgba(16, 185, 129, 0.12);
 }
 
 /* -- Section alt light mode -- */
-:root .section-alt {
+html:not(.dark) .section-alt {
   background: linear-gradient(180deg, #f0f4f8 0%, #e8edf2 100%);
 }
 
 /* -- Footer in light mode -- */
-:root .footer {
+html:not(.dark) .footer {
   background: linear-gradient(180deg, #e8edf2 0%, #dde3ea 100%);
 }
 
 /* -- Weather card light -- */
-:root .weather-card {
+html:not(.dark) .weather-card {
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(96, 165, 250, 0.04));
   box-shadow: var(--shadow-sm);
 }
 
 /* -- Result cards light mode -- */
-:root .result-card {
+html:not(.dark) .result-card {
   box-shadow: var(--shadow-sm);
 }
 

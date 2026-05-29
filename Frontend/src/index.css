@@ -1175,58 +1175,401 @@ html:not(.dark) .result-card {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   RESPONSIVE
+   MOBILE — Apple-Inspired App-Like Experience
    ═══════════════════════════════════════════════════════════════ */
 
-@media (max-width: 768px) {
+/* --- Tablet (≤1024px) --- */
+@media (max-width: 1024px) {
   .section {
-    padding: 80px 16px;
+    padding: 90px 20px;
   }
 
   .section-title {
-    font-size: clamp(2rem, 7vw, 2.5rem);
+    font-size: clamp(2rem, 6vw, 3rem);
+  }
+}
+
+/* --- Mobile (≤768px) — Primary Mobile Breakpoint --- */
+@media (max-width: 768px) {
+
+  /* -- Global mobile feel -- */
+  body {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  .section {
+    padding: 64px 16px;
+  }
+
+  .section-container {
+    max-width: 100%;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+    letter-spacing: -0.035em;
+  }
+
+  .section-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+  }
+
+  /* -- Hero Section — Full-screen mobile hero -- */
+  .hero-section {
+    min-height: 100svh;
+    padding: 0;
   }
 
   .hero-orb {
-    opacity: 0.5;
+    opacity: 0.4;
   }
 
-  .modal-panel {
-    margin: 16px;
-    border-radius: var(--radius-xl);
+  .hero-crop-float {
+    display: none;
   }
 
-  .modal-header {
-    padding: 24px 20px 0;
-  }
-
-  .modal-body {
-    padding: 16px 20px 24px;
+  /* -- Navbar — Compact mobile nav -- */
+  .navbar {
+    padding: 0 16px;
   }
 
   .navbar-inner {
     height: 56px;
   }
 
-  .feature-card {
-    padding: 24px;
+  .navbar.scrolled {
+    border-bottom-width: 0.5px;
   }
 
+  /* -- Buttons — Larger touch targets -- */
   .btn-primary, .btn-outline {
-    padding: 12px 24px;
-    font-size: 0.875rem;
+    padding: 14px 28px;
+    font-size: 0.9rem;
+    border-radius: var(--radius-lg);
+    min-height: 48px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .btn-primary:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+
+  .btn-outline:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+
+  /* -- Cards — Touch-friendly, full-width -- */
+  .feature-card {
+    padding: 24px 20px;
+    border-radius: var(--radius-xl);
+  }
+
+  .feature-card:active {
+    transform: scale(0.98);
+    transition: transform 0.15s ease;
+  }
+
+  .stat-card {
+    padding: 24px 16px;
+    border-radius: var(--radius-lg);
+  }
+
+  .step-card {
+    padding: 28px 20px;
+    border-radius: var(--radius-xl);
+  }
+
+  .crop-card {
+    padding: 16px 12px;
+    border-radius: var(--radius-lg);
+  }
+
+  .glass-card {
+    border-radius: var(--radius-xl);
+  }
+
+  /* -- 3D Crop Cards — Mobile optimized -- */
+  .crop-3d-card {
+    border-radius: var(--radius-xl);
+  }
+
+  .crop-3d-image-wrapper {
+    aspect-ratio: 4 / 3;
+  }
+
+  .crop-3d-image-wrapper img {
+    width: 70%;
+    height: 70%;
+  }
+
+  .crop-3d-info {
+    padding: 16px 20px 20px;
+  }
+
+  .crop-3d-name {
+    font-size: 1.1rem;
+  }
+
+  .crop-3d-badge {
+    font-size: 0.65rem;
+    padding: 5px 12px;
+  }
+
+  /* -- Modals — Full-screen sheet on mobile (Apple style) -- */
+  .modal-backdrop {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal-panel {
+    max-width: 100%;
+    width: 100%;
+    max-height: 92vh;
+    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+    margin: 0;
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .modal-panel.wide {
+    max-width: 100%;
+  }
+
+  .modal-header {
+    padding: 24px 20px 0;
+    position: relative;
+  }
+
+  /* Drag handle indicator (like iOS sheets) */
+  .modal-header::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--text-muted);
+    opacity: 0.3;
+  }
+
+  .modal-body {
+    padding: 16px 20px 32px;
+    padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .modal-close {
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+  }
+
+  /* -- Forms — Touch-optimized inputs -- */
+  .form-input {
+    padding: 16px;
+    font-size: 16px; /* Prevents iOS zoom */
+    border-radius: var(--radius-lg);
+    min-height: 52px;
+  }
+
+  .form-select {
+    padding: 16px;
+    font-size: 16px;
+    border-radius: var(--radius-lg);
+    min-height: 52px;
+  }
+
+  .form-label {
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+  }
+
+  .upload-zone {
+    padding: 28px 20px;
+    border-radius: var(--radius-xl);
+  }
+
+  /* -- Badges — Slightly larger for touch -- */
+  .badge {
+    padding: 5px 14px;
+    font-size: 0.72rem;
+  }
+
+  /* -- Footer — Compact mobile footer -- */
+  .footer {
+    padding: 48px 16px 32px;
+    padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* -- Language selector -- */
+  .lang-select {
+    padding: 8px 14px;
+    font-size: 0.78rem;
+    min-height: 36px;
+  }
+
+  /* -- Auth dropdown -- */
+  .auth-dropdown {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+    padding: 24px 20px;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* -- Result cards -- */
+  .result-card {
+    padding: 18px;
+    border-radius: var(--radius-lg);
+  }
+
+  /* -- Progress bar -- */
+  .progress-bar {
+    height: 8px;
+    border-radius: var(--radius-full);
+  }
+
+  /* -- Weather card -- */
+  .weather-card {
+    padding: 18px;
+    border-radius: var(--radius-lg);
   }
 }
 
+/* --- Small phones (≤480px) --- */
 @media (max-width: 480px) {
   .section {
-    padding: 60px 12px;
+    padding: 48px 14px;
   }
 
   .hero-section {
-    min-height: auto;
-    padding-top: 80px;
-    padding-bottom: 60px;
+    min-height: 100svh;
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 8vw, 2.25rem);
+  }
+
+  .section-subtitle {
+    font-size: 0.88rem;
+  }
+
+  /* Even larger touch targets */
+  .btn-primary, .btn-outline {
+    padding: 15px 24px;
+    font-size: 0.92rem;
+    min-height: 52px;
+  }
+
+  .feature-card {
+    padding: 20px 16px;
+  }
+
+  .stat-card {
+    padding: 20px 14px;
+  }
+
+  .crop-3d-info {
+    padding: 14px 16px 18px;
+  }
+
+  .crop-3d-name {
+    font-size: 1rem;
+  }
+
+  .modal-panel {
+    max-height: 95vh;
+  }
+
+  .form-input, .form-select {
+    padding: 14px;
+  }
+}
+
+/* --- Slide-up animation for mobile sheets --- */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Safe area support for notched phones --- */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .navbar {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .footer {
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* --- Touch device hover prevention --- */
+@media (hover: none) and (pointer: coarse) {
+  .feature-card:hover,
+  .stat-card:hover,
+  .step-card:hover,
+  .crop-card:hover,
+  .glass-card:hover,
+  .crop-3d-card:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .crop-3d-card:hover .crop-3d-image-wrapper img {
+    transform: none;
+  }
+
+  /* Active state for touch feedback instead */
+  .feature-card:active {
+    transform: scale(0.97);
+    border-color: var(--border-accent);
+  }
+
+  .crop-3d-card:active {
+    transform: scale(0.98);
+    border-color: var(--border-accent);
+  }
+
+  .crop-card:active {
+    transform: scale(0.96);
+    border-color: var(--border-accent);
+  }
+
+  .glass-card:active {
+    transform: scale(0.98);
+  }
+
+  .stat-card:active {
+    transform: scale(0.97);
+    border-color: var(--border-accent);
+  }
+}
+
+/* --- Smooth page scroll for iOS --- */
+@supports (-webkit-overflow-scrolling: touch) {
+  .modal-panel {
+    -webkit-overflow-scrolling: touch;
   }
 }
 

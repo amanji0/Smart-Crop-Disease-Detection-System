@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileText, Wallet, Users, Map, ShieldCheck, CreditCard, FlaskConical, UserCheck, Droplet, Store, Leaf, Tractor, Rocket, MapPin, Landmark, Building, Trees, Mountain, Sunrise, Factory, Palmtree, Flower2, Waves, Train, Castle, Sprout, Nut, Droplets, HardHat } from 'lucide-react';
+import { FileText, Wallet, Users, Map, ShieldCheck, CreditCard, FlaskConical, UserCheck, Droplet, Store, Leaf, Tractor, Rocket, MapPin, Landmark, Building, Trees, Mountain, Sunrise, Factory, Palmtree, Flower2, Waves, Train, Castle, Sprout, Nut, Droplets, HardHat, Calendar, History, CheckSquare } from 'lucide-react';
 
 /* ═══════════════════════════════════════════════════════════════
    CENTRAL GOVERNMENT SCHEMES
@@ -574,32 +574,35 @@ const SchemeCard = ({ scheme, index, isState }) => (
         {/* Info chips row */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
           <span style={{
+            display: 'inline-flex', alignItems: 'center', gap: '6px',
             padding: '5px 12px', borderRadius: 'var(--radius-full)', fontSize: '0.72rem',
             fontWeight: 600, background: 'rgba(52,211,153,0.1)', color: 'var(--color-primary)',
             border: '1px solid rgba(52,211,153,0.2)',
           }}>
-            📅 {scheme.applyBy}
+            <Calendar size={14} strokeWidth={2} /> {scheme.applyBy}
           </span>
           <span style={{
+            display: 'inline-flex', alignItems: 'center', gap: '6px',
             padding: '5px 12px', borderRadius: 'var(--radius-full)', fontSize: '0.72rem',
             fontWeight: 600, background: 'rgba(59,130,246,0.1)', color: '#60a5fa',
             border: '1px solid rgba(59,130,246,0.2)',
           }}>
-            👥 {scheme.beneficiaries}
+            <Users size={14} strokeWidth={2} /> {scheme.beneficiaries}
           </span>
           <span style={{
+            display: 'inline-flex', alignItems: 'center', gap: '6px',
             padding: '5px 12px', borderRadius: 'var(--radius-full)', fontSize: '0.72rem',
             fontWeight: 600, background: 'rgba(168,85,247,0.1)', color: '#a78bfa',
             border: '1px solid rgba(168,85,247,0.2)',
           }}>
-            🏛️ Since {scheme.launchDate}
+            <History size={14} strokeWidth={2} /> Since {scheme.launchDate}
           </span>
         </div>
 
         {/* Benefits */}
         <div style={{ marginBottom: 16 }}>
-          <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            ✅ Key Benefits
+          <p style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <CheckSquare size={14} strokeWidth={2.5} color="var(--color-primary)" /> Key Benefits
           </p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
             {scheme.benefits.map((b, i) => (
@@ -643,11 +646,12 @@ const SchemeCard = ({ scheme, index, isState }) => (
           {scheme.benefits}
         </p>
         <div style={{
+          display: 'inline-flex', alignItems: 'center', gap: '6px',
           padding: '5px 12px', borderRadius: 'var(--radius-full)', fontSize: '0.7rem',
           fontWeight: 600, background: 'rgba(52,211,153,0.1)', color: 'var(--color-primary)',
-          border: '1px solid rgba(52,211,153,0.2)', display: 'inline-block', marginBottom: 14,
+          border: '1px solid rgba(52,211,153,0.2)', marginBottom: 14,
         }}>
-          📅 {scheme.applyBy}
+          <Calendar size={14} strokeWidth={2} /> {scheme.applyBy}
         </div>
       </>
     )}

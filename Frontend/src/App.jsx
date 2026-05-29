@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { X, ChevronRight, Github, Twitter, Linkedin, UserCircle, ArrowRight, Menu, X as XIcon, Sun, Moon, Leaf, ScanEye, Sprout, CloudSun, Smartphone, ShoppingBag, Award, HeartHandshake, MapPin, Calendar, Target, Image, Microscope, Wheat, Carrot, Apple, Grape, SunMedium, CloudRain, Droplets, Flower2, Snowflake, Pill, ShieldCheck, Hourglass, Wind, Lightbulb, FlaskConical } from 'lucide-react';
+import { X, ChevronRight, Github, Twitter, Linkedin, UserCircle, ArrowRight, Menu, X as XIcon, Sun, Moon, Leaf, ScanEye, Sprout, CloudSun, Smartphone, ShoppingBag, Award, HeartHandshake, MapPin, Calendar, Target, Image, Microscope, Wheat, Carrot, Apple, Grape, SunMedium, CloudRain, Droplets, Flower2, Snowflake, Pill, ShieldCheck, Hourglass, Wind, Lightbulb, FlaskConical, Loader2, Store } from 'lucide-react';
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import axios from 'axios';
 import Marketplace from './pages/Marketplace';
@@ -1081,7 +1081,7 @@ export default function SmartCropApp() {
                 }}
               >
                 <div style={{ color: 'var(--color-primary)' }}><UserCircle size={48} strokeWidth={1.5} /></div>
-                <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>{loadingRole ? '...' : 'Farmer'}</span>
+                <span style={{ fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '6px' }}>{loadingRole ? <><Loader2 size={16} className="animate-spin" /> Loading</> : 'Farmer'}</span>
               </button>
               <button
                 onClick={() => handleRoleSelect('vendor')}
@@ -1096,8 +1096,8 @@ export default function SmartCropApp() {
                   color: 'var(--text-primary)',
                 }}
               >
-                <span style={{ fontSize: '2rem' }}>🏪</span>
-                <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>{loadingRole ? '...' : 'Vendor'}</span>
+                <div style={{ color: 'var(--color-primary)' }}><Store size={48} strokeWidth={1.5} /></div>
+                <span style={{ fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '6px' }}>{loadingRole ? <><Loader2 size={16} className="animate-spin" /> Loading</> : 'Vendor'}</span>
               </button>
             </div>
           </div>

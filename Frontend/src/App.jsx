@@ -1,3 +1,5 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { X, ChevronRight, Github, Twitter, Linkedin, UserCircle, ArrowRight, Menu, X as XIcon, Sun, Moon, Leaf, ScanEye, Sprout, CloudSun, Smartphone, ShoppingBag, Award, HeartHandshake, MapPin, Calendar, Target, Image, Microscope, Wheat, Carrot, Apple, Grape, SunMedium, CloudRain, Droplets, Flower2, Snowflake, Pill, ShieldCheck, Hourglass, Wind, Lightbulb, FlaskConical } from 'lucide-react';
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import axios from 'axios';
@@ -483,7 +485,7 @@ export default function SmartCropApp() {
                     Select Role
                   </button>
                 )}
-                <button onClick={() => { logout(); setMobileMenuOpen(false); }} className="btn-outline" style={{ width: '100%', padding: '10px', color: '#ef4444', borderColor: 'rgba(239, 68, 68, 0.2)' }}>
+                <button onClick={() => { handleLogout(); setMobileMenuOpen(false); }} className="btn-outline" style={{ width: '100%', padding: '10px', color: '#ef4444', borderColor: 'rgba(239, 68, 68, 0.2)' }}>
                   Logout
                 </button>
               </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { X, ChevronRight, Github, Twitter, Linkedin, UserCircle, ArrowRight, Menu, X as XIcon, Sun, Moon, Leaf, ScanEye, Sprout, CloudSun, Smartphone, ShoppingBag, Award, HeartHandshake, MapPin, Calendar, Target, Image, Microscope, Wheat, Carrot, Apple, Grape, SunMedium, CloudRain, Droplets, Flower2, Snowflake, Pill, ShieldCheck, Hourglass, Wind, Lightbulb, FlaskConical, Loader2, Store } from 'lucide-react';
+import { X, ChevronRight, Github, Twitter, Linkedin, UserCircle, ArrowRight, Menu, X as XIcon, Sun, Moon, Leaf, ScanEye, Sprout, CloudSun, Smartphone, ShoppingBag, Award, HeartHandshake, MapPin, Calendar, Target, Image, Microscope, Wheat, Carrot, Apple, Grape, SunMedium, CloudRain, Droplets, Flower2, Snowflake, Pill, ShieldCheck, Hourglass, Wind, Lightbulb, FlaskConical, Loader2, Store, FileEdit, Bot, CheckCircle } from 'lucide-react';
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import axios from 'axios';
 import Marketplace from './pages/Marketplace';
@@ -667,9 +667,9 @@ export default function SmartCropApp() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', position: 'relative' }}>
             {[
-              { step: '01', title: t.step1title || 'Input Your Data', desc: t.step1desc || 'Enter your city, upload a leaf photo, or select your crop type.', icon: '📝' },
-              { step: '02', title: t.step2title || 'AI Analyzes', desc: t.step2desc || 'Our machine learning models process your data in real-time.', icon: '🤖' },
-              { step: '03', title: t.step3title || 'Get Results', desc: t.step3desc || 'Receive actionable insights, recommendations, and treatment plans.', icon: '✅' },
+              { step: '01', title: t.step1title || 'Input Your Data', desc: t.step1desc || 'Enter your city, upload a leaf photo, or select your crop type.', icon: <FileEdit size={28} strokeWidth={1.5} color="var(--color-primary)" /> },
+              { step: '02', title: t.step2title || 'AI Analyzes', desc: t.step2desc || 'Our machine learning models process your data in real-time.', icon: <Bot size={28} strokeWidth={1.5} color="var(--color-primary)" /> },
+              { step: '03', title: t.step3title || 'Get Results', desc: t.step3desc || 'Receive actionable insights, recommendations, and treatment plans.', icon: <CheckCircle size={28} strokeWidth={1.5} color="var(--color-primary)" /> },
             ].map((s, i) => (
               <div key={i} className={`step-card animate-fade-in-up stagger-${i + 1}`} style={{ opacity: 0 }}>
                 <div style={{

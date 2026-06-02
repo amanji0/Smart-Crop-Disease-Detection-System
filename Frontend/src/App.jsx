@@ -3,6 +3,8 @@ import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { X, ChevronRight, Github, Twitter, Linkedin, UserCircle, ArrowRight, Menu, X as XIcon, Sun, Moon, Leaf, ScanEye, Sprout, CloudSun, Smartphone, ShoppingBag, Award, HeartHandshake, MapPin, Calendar, Target, Image, Microscope, Wheat, Carrot, Apple, Grape, SunMedium, CloudRain, Droplets, Flower2, Snowflake, Pill, ShieldCheck, Hourglass, Wind, Lightbulb, FlaskConical, Loader2, Store, FileEdit, Bot, CheckCircle } from 'lucide-react';
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import axios from 'axios';
+import * as tf from '@tensorflow/tfjs';
+import * as mobilenet from '@tensorflow-models/mobilenet';
 import Marketplace from './pages/Marketplace';
 import Schemes from './pages/Schemes';
 import { getTranslation, supportedLanguages } from './i18n';
@@ -200,6 +202,31 @@ export default function SmartCropApp() {
     if (!diseaseImage) return;
     setLoadingDisease(true);
     try {
+      // 1. Verify image using local AI model (MobileNet)
+      const img = new window.Image();
+      img.src = diseaseImage;
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+      });
+
+      const model = await mobilenet.load();
+      const predictions = await model.classify(img);
+      
+      const plantKeywords = ['plant', 'leaf', 'flower', 'tree', 'pot', 'garden', 'crop', 'vegetable', 'fruit', 'agriculture', 'grass', 'soil', 'dirt', 'seed', 'stem', 'petal', 'rose', 'daisy', 'sunflower', 'corn', 'wheat', 'rice'];
+      
+      const isPlant = predictions.some(p => 
+        plantKeywords.some(keyword => p.className.toLowerCase().includes(keyword))
+      );
+
+      if (!isPlant) {
+        alert("Invalid Image: This doesn't look like a plant or leaf. Please upload a clear photo of your crop for accurate diagnosis.");
+        setLoadingDisease(false);
+        return;
+      }
+
+      // 2. Proceed with disease detection
+
       const blob = base64ToBlob(diseaseImage);
       const fd = new FormData();
       fd.append('image', blob, 'leaf.jpg');

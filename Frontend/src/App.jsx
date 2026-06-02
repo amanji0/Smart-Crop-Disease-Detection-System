@@ -96,7 +96,21 @@ export default function SmartCropApp() {
   const [showAuthMenu, setShowAuthMenu] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
   const [scrolled, setScrolled] = useState(false);
-  const [lang, setLang] = useState('en');
+  const [lang, setLang] = useState(() => localStorage.getItem('lang') || 'en');
+  
+  useEffect(() => {
+    localStorage.setItem('lang', lang);
+    const cookieLang = lang === 'en' ? '' : `/en/${lang}`;
+    const currentCookie = document.cookie.split('; ').find(row => row.startsWith('googtrans='))?.split('=')[1];
+    
+    // Only reload if the cookie needs to change
+    if (currentCookie !== cookieLang && !(lang === 'en' && !currentCookie)) {
+      document.cookie = `googtrans=${cookieLang}; path=/`;
+      document.cookie = `googtrans=${cookieLang}; domain=${window.location.hostname}; path=/`;
+      window.location.reload();
+    }
+  }, [lang]);
+
   const [loadingRole, setLoadingRole] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');

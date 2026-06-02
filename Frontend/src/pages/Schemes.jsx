@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FileText, Wallet, Users, Map, ShieldCheck, CreditCard, FlaskConical, UserCheck, Droplet, Store, Leaf, Tractor, Rocket, MapPin, Landmark, Building, Trees, Mountain, Sunrise, Factory, Palmtree, Flower2, Waves, Train, Castle, Sprout, Nut, Droplets, HardHat, Calendar, History, CheckSquare } from 'lucide-react';
+import { schemeTranslations } from '../data/schemesTranslations';
 
 /* ═══════════════════════════════════════════════════════════════
    CENTRAL GOVERNMENT SCHEMES
@@ -509,7 +510,9 @@ const stateSchemes = [
 /* ═══════════════════════════════════════════════════════════════
    SCHEME CARD COMPONENT
    ═══════════════════════════════════════════════════════════════ */
-const SchemeCard = ({ scheme, index, isState }) => (
+const SchemeCard = ({ scheme, index, isState, lang }) => {
+  const trans = (text) => schemeTranslations[lang]?.[text] || schemeTranslations['en']?.[text] || text;
+  return (
   <div
     className={`animate-fade-in-up stagger-${(index % 6) + 1}`}
     style={{
@@ -559,7 +562,7 @@ const SchemeCard = ({ scheme, index, isState }) => (
           fontFamily: 'var(--font-display)', fontSize: '1.2rem', fontWeight: 700,
           color: 'var(--text-primary)', marginBottom: 8, lineHeight: 1.35,
         }}>
-          {scheme.title}
+          {trans(scheme.title)}
         </h3>
 
         {/* Ministry badge */}
@@ -568,7 +571,7 @@ const SchemeCard = ({ scheme, index, isState }) => (
           padding: '4px 10px', background: 'var(--bg-glass)', borderRadius: 'var(--radius-full)',
           display: 'inline-block', border: '1px solid var(--border-subtle)',
         }}>
-          {scheme.ministry}
+          {trans(scheme.ministry)}
         </div>
 
         {/* Info chips row */}
@@ -579,7 +582,7 @@ const SchemeCard = ({ scheme, index, isState }) => (
             fontWeight: 600, background: 'rgba(52,211,153,0.1)', color: 'var(--color-primary)',
             border: '1px solid rgba(52,211,153,0.2)',
           }}>
-            <Calendar size={14} strokeWidth={2} /> {scheme.applyBy}
+            <Calendar size={14} strokeWidth={2} /> {trans(scheme.applyBy)}
           </span>
           <span style={{
             display: 'inline-flex', alignItems: 'center', gap: '6px',
@@ -602,7 +605,7 @@ const SchemeCard = ({ scheme, index, isState }) => (
         {/* Benefits */}
         <div style={{ marginBottom: 16 }}>
           <p style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            <CheckSquare size={14} strokeWidth={2.5} color="var(--color-primary)" /> Key Benefits
+            <CheckSquare size={14} strokeWidth={2.5} color="var(--color-primary)" /> {trans('KEY BENEFITS')}
           </p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
             {scheme.benefits.map((b, i) => (
@@ -611,7 +614,7 @@ const SchemeCard = ({ scheme, index, isState }) => (
                 paddingLeft: 20, position: 'relative',
               }}>
                 <span style={{ position: 'absolute', left: 0, top: 0, color: 'var(--color-primary)' }}>›</span>
-                {b}
+                {trans(b)}
               </li>
             ))}
           </ul>
@@ -624,10 +627,10 @@ const SchemeCard = ({ scheme, index, isState }) => (
           marginBottom: 20,
         }}>
           <p style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: 2 }}>
-            WHO CAN APPLY
+            {trans('WHO CAN APPLY')}
           </p>
           <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-            {scheme.eligibility}
+            {trans(scheme.eligibility)}
           </p>
         </div>
       </>
@@ -640,10 +643,10 @@ const SchemeCard = ({ scheme, index, isState }) => (
           fontFamily: 'var(--font-display)', fontSize: '1rem', fontWeight: 700,
           color: 'var(--text-primary)', marginBottom: 8, lineHeight: 1.35,
         }}>
-          {scheme.title}
+          {trans(scheme.title)}
         </h4>
         <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: 12 }}>
-          {scheme.benefits}
+          {trans(scheme.benefits)}
         </p>
         <div style={{
           display: 'inline-flex', alignItems: 'center', gap: '6px',
@@ -651,7 +654,7 @@ const SchemeCard = ({ scheme, index, isState }) => (
           fontWeight: 600, background: 'rgba(52,211,153,0.1)', color: 'var(--color-primary)',
           border: '1px solid rgba(52,211,153,0.2)', marginBottom: 14,
         }}>
-          <Calendar size={14} strokeWidth={2} /> {scheme.applyBy}
+          <Calendar size={14} strokeWidth={2} /> {trans(scheme.applyBy)}
         </div>
       </>
     )}
@@ -672,19 +675,19 @@ const SchemeCard = ({ scheme, index, isState }) => (
       onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.88'; e.currentTarget.style.transform = 'scale(1.03)'; }}
       onMouseLeave={(e) => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'scale(1)'; }}
     >
-      {isState ? 'Apply Now' : 'Learn More & Apply'}
+      {isState ? trans('Apply Now') : trans('Learn More & Apply')}
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 8h10M9 4l4 4-4 4" />
       </svg>
     </a>
   </div>
-);
-
+  );
+};
 
 /* ═══════════════════════════════════════════════════════════════
    MAIN SCHEMES COMPONENT
    ═══════════════════════════════════════════════════════════════ */
-const Schemes = ({ t }) => {
+const Schemes = ({ t, lang }) => {
   const [activeTab, setActiveTab] = useState('central');
   const [expandedState, setExpandedState] = useState(null);
 
@@ -801,7 +804,7 @@ const Schemes = ({ t }) => {
               gap: 24,
             }}>
               {centralSchemes.map((scheme, i) => (
-                <SchemeCard key={scheme.id} scheme={scheme} index={i} isState={false} />
+                <SchemeCard key={scheme.id} scheme={scheme} index={i} isState={false} lang={lang} />
               ))}
             </div>
           </div>
@@ -874,7 +877,7 @@ const Schemes = ({ t }) => {
                   {expandedState === stateData.state && (
                     <div style={{ padding: '4px 20px 20px', display: 'flex', flexDirection: 'column', gap: 14 }}>
                       {stateData.schemes.map((scheme, i) => (
-                        <SchemeCard key={i} scheme={scheme} index={i} isState={true} />
+                        <SchemeCard key={i} scheme={scheme} index={i} isState={true} lang={lang} />
                       ))}
                     </div>
                   )}

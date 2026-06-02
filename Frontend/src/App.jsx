@@ -100,15 +100,6 @@ export default function SmartCropApp() {
   
   useEffect(() => {
     localStorage.setItem('lang', lang);
-    const cookieLang = lang === 'en' ? '' : `/en/${lang}`;
-    const currentCookie = document.cookie.split('; ').find(row => row.startsWith('googtrans='))?.split('=')[1];
-    
-    // Only reload if the cookie needs to change
-    if (currentCookie !== cookieLang && !(lang === 'en' && !currentCookie)) {
-      document.cookie = `googtrans=${cookieLang}; path=/`;
-      document.cookie = `googtrans=${cookieLang}; domain=${window.location.hostname}; path=/`;
-      window.location.reload();
-    }
   }, [lang]);
 
   const [loadingRole, setLoadingRole] = useState(false);

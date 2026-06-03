@@ -13,3 +13,5 @@ razorpay
 google-auth
 PyJWT
 pydantic-settings
+passlib[bcrypt]
+email-validator

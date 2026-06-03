@@ -8,6 +8,8 @@ import * as mobilenet from '@tensorflow-models/mobilenet';
 import Marketplace from './pages/Marketplace';
 import Schemes from './pages/Schemes';
 import { getTranslation, supportedLanguages } from './i18n';
+import AuthModal from './components/AuthModal';
+import ProfileModal from './components/ProfileModal';
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID_HERE";
 
@@ -51,7 +53,15 @@ export default function SmartCropApp() {
   const [token, setToken] = useState(null);
   const [showRoleSelect, setShowRoleSelect] = useState(false);
   const [tempGoogleToken, setTempGoogleToken] = useState(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const navigate = useNavigate();
+
+  const handleNativeLoginSuccess = (userData, accessToken) => {
+    setUser(userData);
+    setToken(accessToken);
+    setShowAuthModal(false);
+  };
 
   const loginWithGoogle = useGoogleLogin({
     onSuccess: (tokenResponse) => {
@@ -456,6 +466,18 @@ export default function SmartCropApp() {
                         <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>{user.role}</p>
                       </div>
                       <button
+                        onClick={() => { setShowProfileModal(true); setShowAuthMenu(false); }}
+                        style={{
+                          width: '100%', padding: '10px', borderRadius: '10px',
+                          background: 'rgba(52, 211, 153, 0.08)', border: '1px solid rgba(52, 211, 153, 0.15)',
+                          color: '#10b981', fontWeight: 600, fontSize: '0.85rem', cursor: 'pointer',
+                          marginBottom: '8px',
+                          transition: 'var(--transition-fast)',
+                        }}
+                      >
+                        Profile
+                      </button>
+                      <button
                         onClick={() => { handleLogout(); setShowAuthMenu(false); }}
                         style={{
                           width: '100%', padding: '10px', borderRadius: '10px',
@@ -471,8 +493,15 @@ export default function SmartCropApp() {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center' }}>Sign in to list crops or buy</p>
                       <button
-                        onClick={() => { loginWithGoogle(); setShowAuthMenu(false); }}
+                        onClick={() => { setShowAuthModal(true); setShowAuthMenu(false); }}
                         className="btn-primary"
+                        style={{ width: '100%', justifyContent: 'center', padding: '10px 20px', borderRadius: '10px', fontSize: '0.85rem' }}
+                      >
+                        Login / Sign Up
+                      </button>
+                      <button
+                        onClick={() => { loginWithGoogle(); setShowAuthMenu(false); }}
+                        className="btn-outline"
                         style={{ width: '100%', justifyContent: 'center', padding: '10px 20px', borderRadius: '10px', fontSize: '0.85rem' }}
                       >
                         Login with Google
@@ -524,15 +553,25 @@ export default function SmartCropApp() {
                     Select Role
                   </button>
                 )}
+                <button onClick={() => { setShowProfileModal(true); setMobileMenuOpen(false); }} className="btn-outline" style={{ width: '100%', padding: '10px', color: '#10b981', borderColor: 'rgba(16, 185, 129, 0.2)' }}>
+                  Profile
+                </button>
                 <button onClick={() => { handleLogout(); setMobileMenuOpen(false); }} className="btn-outline" style={{ width: '100%', padding: '10px', color: '#ef4444', borderColor: 'rgba(239, 68, 68, 0.2)' }}>
                   Logout
                 </button>
               </div>
             ) : (
-              <div style={{ padding: '8px 0' }}>
+              <div style={{ padding: '8px 0', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <button
+                  onClick={() => { setShowAuthModal(true); setMobileMenuOpen(false); }}
+                  className="btn-primary"
+                  style={{ width: '100%', justifyContent: 'center' }}
+                >
+                  Login / Sign Up
+                </button>
                 <button
                   onClick={() => { loginWithGoogle(); setMobileMenuOpen(false); }}
-                  className="btn-primary"
+                  className="btn-outline"
                   style={{ width: '100%', justifyContent: 'center' }}
                 >
                   Login with Google
@@ -1147,7 +1186,8 @@ export default function SmartCropApp() {
           </div>
         </div>
       )}
-
+      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} onLoginSuccess={handleNativeLoginSuccess} />}
+      {showProfileModal && <ProfileModal user={user} token={token} onClose={() => setShowProfileModal(false)} onLogout={handleLogout} />}
     </div>
   );
 }

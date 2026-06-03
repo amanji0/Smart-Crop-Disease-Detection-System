@@ -63,6 +63,10 @@ export default function SmartCropApp() {
 
   const handleRoleSelect = async (role) => {
     setLoadingRole(true);
+    setLoadingMessage('');
+    const timeout = setTimeout(() => {
+      setLoadingMessage('Waking up the server... This can take up to 50 seconds on the free tier.');
+    }, 3000);
     try {
       const res = await axios.post(`${API_URL}/auth/google?token=${tempGoogleToken}&role=${role}`);
       setUser(res.data.user);
@@ -72,7 +76,9 @@ export default function SmartCropApp() {
     } catch (err) {
       alert('Authentication error: ' + (err.response?.data?.detail || err.message));
     } finally {
+      clearTimeout(timeout);
       setLoadingRole(false);
+      setLoadingMessage('');
     }
   };
 
@@ -103,6 +109,7 @@ export default function SmartCropApp() {
   }, [lang]);
 
   const [loadingRole, setLoadingRole] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
 
@@ -470,6 +477,21 @@ export default function SmartCropApp() {
                       >
                         Login with Google
                       </button>
+                      <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '4px 0' }} />
+                      <button
+                        onClick={() => { handleDemoLogin('farmer'); setShowAuthMenu(false); }}
+                        className="btn-outline"
+                        style={{ width: '100%', justifyContent: 'center', padding: '8px 20px', borderRadius: '10px', fontSize: '0.85rem' }}
+                      >
+                        Demo: Farmer
+                      </button>
+                      <button
+                        onClick={() => { handleDemoLogin('admin'); setShowAuthMenu(false); }}
+                        className="btn-outline"
+                        style={{ width: '100%', justifyContent: 'center', padding: '8px 20px', borderRadius: '10px', fontSize: '0.85rem' }}
+                      >
+                        Demo: Admin
+                      </button>
                     </div>
                   )}
                 </div>
@@ -526,9 +548,23 @@ export default function SmartCropApp() {
                 <button
                   onClick={() => { loginWithGoogle(); setMobileMenuOpen(false); }}
                   className="btn-primary"
-                  style={{ width: '100%', justifyContent: 'center' }}
+                  style={{ width: '100%', justifyContent: 'center', marginBottom: '8px' }}
                 >
                   Login with Google
+                </button>
+                <button
+                  onClick={() => { handleDemoLogin('farmer'); setMobileMenuOpen(false); }}
+                  className="btn-outline"
+                  style={{ width: '100%', justifyContent: 'center', marginBottom: '8px' }}
+                >
+                  Demo: Farmer
+                </button>
+                <button
+                  onClick={() => { handleDemoLogin('admin'); setMobileMenuOpen(false); }}
+                  className="btn-outline"
+                  style={{ width: '100%', justifyContent: 'center' }}
+                >
+                  Demo: Admin
                 </button>
               </div>
             )}
@@ -1098,6 +1134,11 @@ export default function SmartCropApp() {
           }} className="animate-scale-in">
             <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.25rem', color: 'var(--text-primary)', marginBottom: '8px' }}>Select Your Role</h3>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '24px' }}>Are you a farmer or a vendor?</p>
+            {loadingMessage && (
+              <div style={{ padding: '12px', marginBottom: '20px', borderRadius: '8px', background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.2)', color: '#3b82f6', fontSize: '0.85rem', textAlign: 'center', fontWeight: '500' }}>
+                {loadingMessage}
+              </div>
+            )}
             <div style={{ display: 'flex', gap: '12px' }}>
               <button
                 onClick={() => handleRoleSelect('farmer')}

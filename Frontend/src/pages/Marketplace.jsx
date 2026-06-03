@@ -43,6 +43,19 @@ const Marketplace = ({ user, token, loginWithGoogle, t }) => {
     }
   };
 
+  const handleDeleteListing = async (listingId) => {
+    if (!window.confirm("Are you sure you want to delete this listing?")) return;
+    try {
+      await axios.delete(`${API_URL}/marketplace/listings/${listingId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      alert('Listing deleted successfully!');
+      fetchListings();
+    } catch (err) {
+      alert(err.response?.data?.detail || 'Error deleting listing');
+    }
+  };
+
   const handleBuy = async (listing) => {
     if (!user || user.role !== 'vendor') return alert('Only vendors can buy crops. Please login as a Vendor.');
     
@@ -293,6 +306,29 @@ const Marketplace = ({ user, token, loginWithGoogle, t }) => {
                     }}>
                       ₹{item.price_per_kg}/kg
                     </div>
+
+                    {/* Delete button for owner or admin */}
+                    {user && (String(user.id) === String(item.farmer_id) || user.role === 'admin') && (
+                      <button
+                        onClick={() => handleDeleteListing(item.id)}
+                        style={{
+                          position: 'absolute', top: '0.5rem', left: '0.5rem',
+                          padding: '0.2rem 0.6rem', fontSize: '0.75rem',
+                          background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444',
+                          border: '1px solid rgba(239, 68, 68, 0.3)',
+                          borderRadius: 'var(--radius-sm)', cursor: 'pointer',
+                          fontWeight: 600, zIndex: 10, transition: 'all 0.2s'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
+                        }}
+                      >
+                        Delete
+                      </button>
+                    )}
 
                     {/* Crop info */}
                     <h3 style={{

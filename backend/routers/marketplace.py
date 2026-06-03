@@ -124,3 +124,21 @@ def verify_payment(razorpay_order_id: str, razorpay_payment_id: str, razorpay_si
         pass # Ignored for safety
 
     return {"status": "Payment Successful"}
+
+@router.delete("/listings/{listing_id}")
+def delete_listing(listing_id: str, db = Depends(get_db), current_user = Depends(get_user_from_token)):
+    try:
+        obj_id = ObjectId(listing_id)
+    except InvalidId:
+        raise HTTPException(status_code=400, detail="Invalid listing ID format")
+        
+    listing = db.listings.find_one({"_id": obj_id})
+    if not listing:
+        raise HTTPException(status_code=404, detail="Listing not found")
+        
+    if current_user.get("id") != listing.get("farmer_id") and current_user.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="You do not have permission to delete this listing")
+        
+    db.listings.delete_one({"_id": obj_id})
+    
+    return {"status": "Listing deleted successfully"}

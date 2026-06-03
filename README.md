@@ -4,7 +4,7 @@
 
 # 🌱 Smart Crop Disease Detection System
 
-*An intelligent web application empowering farmers with AI-driven crop recommendations and plant disease detection*
+*An intelligent web application empowering farmers with AI-driven crop recommendations, plant disease detection, direct B2B trading, and government scheme guidance.*
 
 <br/>
 
@@ -43,16 +43,18 @@
 
 ## 🌍 Overview
 
-**Smart Crop Disease Detection System** is a full-stack AI-powered web application built to help farmers make data-driven agricultural decisions.
+**Smart Crop Disease Detection System** is a full-stack AI-powered web application built to help farmers make data-driven agricultural decisions, access financial support, and trade their produce directly with buyers.
 
-The system combines **real-time environmental data** (weather + soil) with **machine learning models** to deliver two core services:
+The system combines **real-time environmental data**, **machine learning models**, and **native localized content** to deliver four core services:
 
-| Service | Description | Model | Accuracy |
-|---------|-------------|-------|----------|
-| 🌾 Crop Recommendation | Suggests the optimal crop based on soil & weather | Random Forest | **99.55%** |
-| 🔬 Disease Detection | Identifies plant diseases from leaf images | MobileNetV2 CNN | **95%+ target** |
+| Service | Description | Model/Integration |
+|---------|-------------|-------------------|
+| 🌾 Crop Recommendation | Suggests the optimal crop based on soil & weather | Random Forest (**99.55%**) |
+| 🔬 Disease Detection | Identifies plant diseases from leaf images | MobileNetV2 CNN (**95%+**) |
+| 🏛️ Government Schemes | Comprehensive database of Central & State-wise schemes | Native i18n Translations |
+| 🛒 B2B Marketplace | Direct trading platform for buyers and sellers | Firebase Auth & Realtime DB |
 
-The interface supports **English and Hindi** — making it accessible to farmers across India and beyond.
+The interface natively supports **10 Indian Regional Languages** — making it completely accessible to farmers across the country without relying on external third-party widgets.
 
 ---
 
@@ -63,8 +65,10 @@ The interface supports **English and Hindi** — making it accessible to farmers
 │  🤖  AI Crop Recommendation     →  22 crop classes, 99.55% acc  │
 │  🔬  Plant Disease Detection    →  38 disease classes (CNN)     │
 │  🌤️  Real-time Weather Data     →  Open-Meteo API integration   │
+│  🏛️  Govt Schemes Directory     →  State & Central initiatives  │
+│  🛒  B2B Marketplace            →  Zero middlemen trading       │
 │  🌍  Soil Property Analysis     →  N, P, K, pH inputs           │
-│  🌐  English & Hindi UI         →  Language toggle built-in     │
+│  🌐  10 Regional Languages      →  Flawless native translations │
 │  📱  Mobile Responsive          →  Works on all devices         │
 │  ⚡  High-Performance Backend   →  FastAPI + async Python        │
 └─────────────────────────────────────────────────────────────────┘
@@ -82,7 +86,7 @@ The interface supports **English and Hindi** — making it accessible to farmers
                                │ HTTPS
                     ┌──────────▼──────────┐
                     │   ⚛️  React.js        │
-                    │  English / Hindi UI  │
+                    │  10 Native Languages │
                     │   Tailwind CSS       │
                     └──────────┬──────────┘
                                │ REST API
@@ -102,6 +106,7 @@ The interface supports **English and Hindi** — making it accessible to farmers
                           │     External APIs        │
                           │  🌤️ Open-Meteo           │
                           │  🌍 Geocoding API        │
+                          │  🔒 Firebase Auth        │
                           └─────────────────────────┘
 ```
 
@@ -211,7 +216,8 @@ Body: { image: <file>, plant_type: "Tomato" }
 | React.js 18 | UI framework |
 | Tailwind CSS | Styling |
 | Vite | Build tool |
-| i18n (EN/HI) | Language support |
+| i18n (Native) | 10 Regional Languages support |
+| Firebase | Authentication (Google Auth) |
 
 ### Backend
 | Technology | Purpose |
@@ -245,7 +251,13 @@ smart-crop-assistant/
 │
 ├── 📁 Frontend/                    # React.js Application
 │   ├── src/
-│   │   ├── App.jsx                 # Main app component (EN/HI support)
+│   │   ├── App.jsx                 # Main app component (Routing, Lang)
+│   │   ├── data/
+│   │   │   └── schemesTranslations.js # Heavy native translations
+│   │   ├── i18n.js                 # 10 Languages Core Config
+│   │   ├── pages/
+│   │   │   ├── Marketplace.jsx     # B2B Trade UI
+│   │   │   └── Schemes.jsx         # Govt Schemes UI
 │   │   ├── index.css               # Design system
 │   │   └── main.jsx                # React DOM render
 │   ├── index.html                  # HTML entry point
@@ -315,20 +327,28 @@ npm run dev
 ```env
 # Frontend/.env
 VITE_API_URL=https://your-backend.onrender.com
+VITE_FIREBASE_API_KEY=your_firebase_key
+VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
 ```
 
 ---
 
 ## 🌐 Language Support
 
-The application supports **English** and **Hindi** — selectable directly in the interface.
+The application fully supports **10 Indian Regional Languages** natively without external third-party translator widgets. All UI components, scheme data, and marketplace tools automatically translate when switching the language dropdown.
 
 | Language | Code | Status |
 |----------|------|--------|
 | English | `en` | ✅ Default |
 | Hindi | `hi` | ✅ Supported |
-
-To switch language, use the **EN / HI** toggle button in the navigation bar.
+| Bengali | `bn` | ✅ Supported |
+| Telugu | `te` | ✅ Supported |
+| Marathi | `mr` | ✅ Supported |
+| Tamil | `ta` | ✅ Supported |
+| Gujarati | `gu` | ✅ Supported |
+| Kannada | `kn` | ✅ Supported |
+| Malayalam | `ml` | ✅ Supported |
+| Odia | `or` | ✅ Supported |
 
 ---
 
@@ -338,8 +358,7 @@ To switch language, use the **EN / HI** toggle button in the navigation bar.
 |-----|----------|---------------|------|
 | [Open-Meteo](https://open-meteo.com) | Temperature, humidity, rainfall | ❌ No | Free |
 | [Open-Meteo Geocoding](https://open-meteo.com/en/docs/geocoding-api) | City → coordinates | ❌ No | Free |
-
-All external APIs are **free and require no API keys**.
+| [Firebase Auth](https://firebase.google.com/docs/auth) | Google login for Marketplace | ❌ No | Free |
 
 ---
 
@@ -349,8 +368,8 @@ All external APIs are **free and require no API keys**.
 Phase 1  ████████████████████  ✅ Foundation (Repo, Architecture, AI Setup)
 Phase 2  ████████████████████  ✅ Core AI + Backend APIs
 Phase 3  ████████████████████  ✅ Full Integration + UI Redesign
-Phase 4  ██████████░░░░░░░░░░  🔄 Hindi Language Support
-Phase 5  ░░░░░░░░░░░░░░░░░░░░  📋 Mobile PWA
+Phase 4  ████████████████████  ✅ 10 Regional Languages Native Support
+Phase 5  ████████████████████  ✅ Govt Schemes & B2B Marketplace Integration
 Phase 6  ░░░░░░░░░░░░░░░░░░░░  📋 Advanced Disease Model
 ```
 
@@ -360,7 +379,7 @@ Phase 6  ░░░░░░░░░░░░░░░░░░░░  📋 Adva
 
 **🌱 Smart Crop Disease Detection System**
 
-*Empowering Farmers with Artificial Intelligence*
+*Empowering Farmers with Artificial Intelligence & Direct Trade*
 
 *Built with Machine Learning & Open Weather Data · 2025–26*
 

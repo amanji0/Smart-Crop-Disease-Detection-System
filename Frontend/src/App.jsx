@@ -477,21 +477,6 @@ export default function SmartCropApp() {
                       >
                         Login with Google
                       </button>
-                      <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '4px 0' }} />
-                      <button
-                        onClick={() => { handleDemoLogin('farmer'); setShowAuthMenu(false); }}
-                        className="btn-outline"
-                        style={{ width: '100%', justifyContent: 'center', padding: '8px 20px', borderRadius: '10px', fontSize: '0.85rem' }}
-                      >
-                        Demo: Farmer
-                      </button>
-                      <button
-                        onClick={() => { handleDemoLogin('admin'); setShowAuthMenu(false); }}
-                        className="btn-outline"
-                        style={{ width: '100%', justifyContent: 'center', padding: '8px 20px', borderRadius: '10px', fontSize: '0.85rem' }}
-                      >
-                        Demo: Admin
-                      </button>
                     </div>
                   )}
                 </div>
@@ -548,23 +533,9 @@ export default function SmartCropApp() {
                 <button
                   onClick={() => { loginWithGoogle(); setMobileMenuOpen(false); }}
                   className="btn-primary"
-                  style={{ width: '100%', justifyContent: 'center', marginBottom: '8px' }}
-                >
-                  Login with Google
-                </button>
-                <button
-                  onClick={() => { handleDemoLogin('farmer'); setMobileMenuOpen(false); }}
-                  className="btn-outline"
-                  style={{ width: '100%', justifyContent: 'center', marginBottom: '8px' }}
-                >
-                  Demo: Farmer
-                </button>
-                <button
-                  onClick={() => { handleDemoLogin('admin'); setMobileMenuOpen(false); }}
-                  className="btn-outline"
                   style={{ width: '100%', justifyContent: 'center' }}
                 >
-                  Demo: Admin
+                  Login with Google
                 </button>
               </div>
             )}

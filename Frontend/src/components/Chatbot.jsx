@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageCircle, X, Send, Bot, User, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Tractor, User, Loader2 } from 'lucide-react';
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { id: 1, text: "Hi there! I'm your SmartCrop Assistant. How can I help you today?", sender: 'bot' }
+    { id: 1, text: "Howdy partner! I'm yer friendly Farm Assistant. What can I help y'all with out in the fields today?", sender: 'bot' }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -27,25 +27,25 @@ export default function Chatbot() {
     setInput('');
     setIsTyping(true);
 
-    // Rule-based engine
+    // Farmer-themed Rule-based engine
     setTimeout(() => {
-      let botResponse = "I'm not sure I understand. Could you please rephrase that? I can help you with crop recommendations, disease detection, weather, or account settings.";
+      let botResponse = "Well shoot, I reckon I didn't quite catch that over the sound of the tractor. Could ya rephrase? I can help ya with crops, sick plants, weather, or yer account.";
       const lowerInput = userMessage.text.toLowerCase();
 
       if (lowerInput.includes('delete') && (lowerInput.includes('account') || lowerInput.includes('profile'))) {
-        botResponse = "To delete your account, click on your Profile icon in the top right corner. Then select the 'Advanced' tab. You will find the 'Delete Account' option in the Danger Zone at the bottom.";
+        botResponse = "Well I'll be! If you're lookin' to pack up and leave, click your Profile icon up yonder. Head to the 'Advanced' tab, and you'll find the 'Delete Account' button down in the Danger Zone.";
       } else if (lowerInput.includes('crop') || lowerInput.includes('recommendation')) {
-        botResponse = "I can help with crop recommendations! Just scroll down to the 'Features' section and click on 'Crop Recommendation'. Enter your city and our AI will suggest the best crops based on live weather data.";
+        botResponse = "Lookin' for a good harvest? Head on down to the 'Features' section and click 'Crop Recommendation'. Tell me your city, and I'll reckon the best crop for your soil and weather!";
       } else if (lowerInput.includes('disease') || lowerInput.includes('sick') || lowerInput.includes('cure')) {
-        botResponse = "If your plant looks sick, use our 'Disease Detection' tool. Take a clear photo of the affected leaf, upload it to the tool, and our AI will diagnose the issue and provide a treatment plan.";
+        botResponse = "Got a sick plant? Don't fret! Snap a clear picture of that ailing leaf and upload it to our 'Disease Detection' tool. I'll take a gander and tell ya exactly how to nurse it back to health.";
       } else if (lowerInput.includes('weather') || lowerInput.includes('rain') || lowerInput.includes('temperature')) {
-        botResponse = "You can check the local 5-day weather forecast by using our 'Weather Alerts' feature. It uses real-time satellite data to keep you informed.";
-      } else if (lowerInput.includes('hello') || lowerInput.includes('hi ') || lowerInput === 'hi') {
-        botResponse = "Hello! How can I assist you with your farming today?";
+        botResponse = "Wonderin' if you should water the fields? Check the 'Weather Alerts' feature for a trusty 5-day forecast, straight from the clouds to your screen.";
+      } else if (lowerInput.includes('hello') || lowerInput.includes('hi ') || lowerInput === 'hi' || lowerInput.includes('howdy')) {
+        botResponse = "Howdy there! Ready to get your hands dirty? How can I lend a hand on the farm today?";
       } else if (lowerInput.includes('password') || lowerInput.includes('login')) {
-        botResponse = "If you need help logging in, click the 'Login / Sign Up' button in the top menu. We use secure OTP email verification instead of passwords to keep your account safe!";
+        botResponse = "Need help unlockin' the barn door? Click the 'Login / Sign Up' button up top. We use a secure OTP email code instead of passwords to keep the coyotes out!";
       } else if (lowerInput.includes('support') || lowerInput.includes('help') || lowerInput.includes('contact')) {
-        botResponse = "If you need human assistance, you can email our support team directly at support@smartcrop.com. They usually respond within 24 hours.";
+        botResponse = "Need to holler at the farm hands? Just send a pigeon—er, an email—to support@smartcrop.com. We'll get back to ya before the rooster crows!";
       }
 
       setMessages(prev => [...prev, { id: Date.now(), text: botResponse, sender: 'bot' }]);
@@ -117,12 +117,12 @@ export default function Chatbot() {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
-              <Bot size={18} />
+              <Tractor size={18} />
             </div>
             <div>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>SmartCrop AI</h3>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>Farm Assistant</h3>
               <p style={{ fontSize: '0.75rem', color: '#10b981', margin: 0, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', display: 'inline-block' }} /> Online
+                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', display: 'inline-block' }} /> In the field
               </p>
             </div>
           </div>
@@ -153,7 +153,7 @@ export default function Chatbot() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 color: msg.sender === 'user' ? 'var(--text-secondary)' : '#10b981'
               }}>
-                {msg.sender === 'user' ? <User size={14} /> : <Bot size={14} />}
+                {msg.sender === 'user' ? <User size={14} /> : <Tractor size={14} />}
               </div>
               <div style={{
                 background: msg.sender === 'user' ? 'var(--color-primary)' : 'var(--bg-tertiary)',
@@ -175,7 +175,7 @@ export default function Chatbot() {
           {isTyping && (
             <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-end' }}>
               <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(52, 211, 153, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10b981' }}>
-                <Bot size={14} />
+                <Tractor size={14} />
               </div>
               <div style={{ background: 'var(--bg-tertiary)', padding: '10px 14px', borderRadius: '16px', borderBottomLeftRadius: '4px', display: 'flex', gap: '4px' }}>
                 <Loader2 size={16} className="animate-spin" color="var(--text-secondary)" />
@@ -196,7 +196,7 @@ export default function Chatbot() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask me anything..."
+              placeholder="Holler somethin'..."
               style={{
                 flex: 1,
                 padding: '10px 16px',

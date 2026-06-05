@@ -10,6 +10,7 @@ import Schemes from './pages/Schemes';
 import { getTranslation, supportedLanguages } from './i18n';
 import AuthModal from './components/AuthModal';
 import ProfileModal from './components/ProfileModal';
+import Chatbot from './components/Chatbot';
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID_HERE";
 
@@ -1188,6 +1189,8 @@ export default function SmartCropApp() {
       )}
       {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} onLoginSuccess={handleNativeLoginSuccess} />}
       {showProfileModal && <ProfileModal user={user} token={token} onClose={() => setShowProfileModal(false)} onLogout={handleLogout} />}
+      
+      <Chatbot />
     </div>
   );
 }

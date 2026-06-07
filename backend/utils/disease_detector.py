@@ -5,18 +5,13 @@ from PIL import Image
 import io
 
 try:
-    from tflite_runtime.interpreter import Interpreter
-    TFLITE_AVAILABLE = True
+    import onnxruntime as ort
+    ONNX_AVAILABLE = True
 except ImportError:
-    try:
-        import tensorflow as tf
-        Interpreter = tf.lite.Interpreter
-        TFLITE_AVAILABLE = True
-    except ImportError:
-        TFLITE_AVAILABLE = False
+    ONNX_AVAILABLE = False
 
 MODEL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "ai-ml", "models")
-DISEASE_MODEL_PATH = os.path.join(MODEL_DIR, "disease_model.tflite")
+DISEASE_MODEL_PATH = os.path.join(MODEL_DIR, "disease_model.onnx")
 CLASS_INDICES_PATH = os.path.join(MODEL_DIR, "class_indices.json")
 
 # Dictionary fallback for treatments (to decouple ML from domain knowledge)
@@ -36,21 +31,17 @@ class DiseaseDetector:
         self.load_artifacts()
 
     def load_artifacts(self):
-        if not TFLITE_AVAILABLE:
-            print("⚠️ TFLite not installed. DiseaseDetector disabled.")
+        if not ONNX_AVAILABLE:
+            print("⚠️ ONNX Runtime not installed. DiseaseDetector disabled.")
             return
 
         if os.path.exists(DISEASE_MODEL_PATH):
             try:
-                self.model = Interpreter(model_path=DISEASE_MODEL_PATH)
-                self.model.allocate_tensors()
-                
-                self.input_details = self.model.get_input_details()
-                self.output_details = self.model.get_output_details()
-                
-                print("✅ TFLite Disease model loaded successfully.")
+                self.session = ort.InferenceSession(DISEASE_MODEL_PATH)
+                self.input_name = self.session.get_inputs()[0].name
+                print("✅ ONNX Disease model loaded successfully.")
             except Exception as e:
-                print(f"⚠️ Error loading disease model: {e}")
+                print(f"⚠️ Error loading ONNX disease model: {e}")
 
         if os.path.exists(CLASS_INDICES_PATH):
             try:
@@ -85,10 +76,8 @@ class DiseaseDetector:
             img_array = np.array(image, dtype=np.float32) / 255.0
             img_array = np.expand_dims(img_array, axis=0) # Add batch dimension
             
-            # Predict using TFLite
-            self.model.set_tensor(self.input_details[0]['index'], img_array)
-            self.model.invoke()
-            predictions = self.model.get_tensor(self.output_details[0]['index'])
+            # Predict using ONNX
+            predictions = self.session.run(None, {self.input_name: img_array})[0]
             
             class_idx = np.argmax(predictions[0])
             confidence = float(predictions[0][class_idx]) * 100

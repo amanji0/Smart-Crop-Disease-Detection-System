@@ -16,6 +16,6 @@ pydantic-settings
 passlib
 bcrypt
 email-validator
-tflite-runtime
+onnxruntime
 Pillow
 python-multipart

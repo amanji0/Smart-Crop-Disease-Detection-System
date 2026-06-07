@@ -10,7 +10,7 @@ try:
 except ImportError:
     ONNX_AVAILABLE = False
 
-MODEL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "ai-ml", "models")
+MODEL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "models")
 DISEASE_MODEL_PATH = os.path.join(MODEL_DIR, "disease_model.onnx")
 CLASS_INDICES_PATH = os.path.join(MODEL_DIR, "class_indices.json")
 
@@ -58,12 +58,12 @@ class DiseaseDetector:
                 print(f"⚠️ Error loading class indices: {e}")
 
     def predict(self, image_bytes: bytes) -> dict:
-        if not self.model or not self.index_to_class:
+        if not getattr(self, 'session', None) or not getattr(self, 'index_to_class', None):
             return {
                 "disease": "System Initialization Error",
                 "confidence": 0.0,
                 "treatment": "Model not loaded.",
-                "prevention": "Please ensure the .h5 model and class_indices.json are present."
+                "prevention": "Please ensure the .onnx model and class_indices.json are present in backend/models/."
             }
 
         try:
